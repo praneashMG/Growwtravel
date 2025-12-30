@@ -1858,15 +1858,25 @@
             navContainer.appendChild(item);
         });
         
-        // Update dropdown positions
-        dropdowns.forEach(dropdown => {
-            const menu = dropdown.querySelector('.dropdown-menu');
-            if (menu) {
-                menu.style.left = 'auto';
-                menu.style.right = '0';
-                menu.style.textAlign = 'right';
-            }
-        });
+       // FIXED Mobile + 1024px Dropdown
+dropdowns.forEach(dropdown => {
+    const link = dropdown.querySelector('a');
+
+    link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 1024) {
+            e.preventDefault();
+            e.stopPropagation(); // IMPORTANT
+
+            // Close other dropdowns
+            dropdowns.forEach(d => {
+                if (d !== dropdown) d.classList.remove('active');
+            });
+
+            dropdown.classList.toggle('active');
+        }
+    });
+});
+
     }
 
     // Function to update navbar for LTR
@@ -1943,17 +1953,17 @@
     });
 
     // Click outside to close menu
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 992) {
-            if (!e.target.closest('.nav-links') && !e.target.closest('#hamburger')) {
-                navLinks.classList.remove('active');
-                hamburger.classList.remove('active');
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        }
-    });
+   document.addEventListener('click', (e) => {
+    if (
+        !e.target.closest('.nav-links') &&
+        !e.target.closest('#hamburger')
+    ) {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+        dropdowns.forEach(d => d.classList.remove('active'));
+    }
+});
+
 
     // Window resize handler
     window.addEventListener('resize', () => {

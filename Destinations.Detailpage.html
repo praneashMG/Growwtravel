@@ -901,11 +901,13 @@
 
 
         // Mobile Dropdown
+                // Mobile Dropdown
         dropdowns.forEach(dropdown => {
             const link = dropdown.querySelector('a');
             link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 992) {
+                if (window.innerWidth <= 1024) {
                     e.preventDefault();
+
                     dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
                     dropdown.classList.toggle('active');
                 }
@@ -953,9 +955,10 @@
         }
 
 
-        document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 992) {
+                document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
                 if (!e.target.closest('.nav-links') && !e.target.closest('#hamburger')) {
+
                     navLinks.classList.remove('active');
                     hamburger.classList.remove('active');
                     dropdowns.forEach(d => d.classList.remove('active'));
@@ -965,9 +968,11 @@
 
 
         // Window resize handler
+                // Window resize handler
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 992) {
+            if (window.innerWidth > 1024) {
                 navLinks.classList.remove('active');
+
                 hamburger.classList.remove('active');
                 dropdowns.forEach(d => d.classList.remove('active'));
             }

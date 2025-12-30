@@ -1801,6 +1801,782 @@
             hamburger.classList.toggle('active');
         });
 
+                dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('a');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1024) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+
+                    
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // RTL Toggle
+        rtlBtn.addEventListener("click", () => {
+            document.body.classList.toggle("rtl");
+            rtlBtn.textContent = document.body.classList.contains("rtl") ? "↪" : "↔";
+            localStorage.setItem('rtl', document.body.classList.contains("rtl") ? 'true' : 'false');
+        });
+
+        // Check for saved RTL preference
+        const savedRTL = localStorage.getItem('rtl');
+        if (savedRTL === 'true') {
+            document.body.classList.add("rtl");
+            rtlBtn.textContent = "↪";
+        }
+
+        // Set active nav link based on current page
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to current page link
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Special handling for Packages page
+            if (currentPage === 'Packages.html') {
+                const packagesLink = document.querySelector('.nav-links a[href="Packages.html"]');
+                if (packagesLink) {
+                    packagesLink.classList.add('active');
+                }
+            }
+        });
+
+                document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+                if (!e.target.closest('.nav-links') && !e.target.closest('#hamburger')) {
+
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            }
+        });
+
+        // Window resize handler
+                // Window resize handler
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                navLinks.classList.remove('active');
+
+                hamburger.classList.remove('active');
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // View More button functionality
+        document.querySelectorAll('.view-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.event-card');
+                const location = card.querySelector('.event-location').textContent;
+                alert(`Viewing details for: ${location}`);
+            });
+        });
+
+        // Card click functionality
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.view-btn') && !e.target.closest('.date-badge')) {
+                    const location = this.querySelector('.event-location').textContent;
+                    alert(`Selected package: ${location}`);
+                }
+            });
+        });
+
+        // Placeholder Alerts
+        function openRegistration() { alert('Registration form will open here.'); }
+        function openSignIn() { alert('Sign In form will open here.'); }
+    </script>
+</body>
+</html>ero {
+                height: 45vh;
+                margin-top: 0;
+                padding-top: 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+                margin: 15px 0;
+            }
+            
+            .tag {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 200px;
+                max-width: 100%;
+            }
+            
+            .section-header {
+                margin: 2.5rem auto 1.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .travel-card-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                gap: 1.5rem;
+                padding: 0 1rem;
+                margin-bottom: 3rem;
+            }
+            
+            .event-img {
+                height: 200px;
+            }
+            
+            .event-content {
+                padding: 1.25rem;
+            }
+            
+            .event-title {
+                font-size: 1.2rem;
+                min-height: auto;
+            }
+            
+            .price-tag {
+                font-size: 1.5rem;
+            }
+            
+            /* FOOTER 2x3 LAYOUT FOR MOBILE TABLET */
+            .footer {
+                padding: 4rem 1.5rem 2rem;
+            }
+            
+            .footer-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+                grid-template-areas: 
+                    "logo logo"
+                    "links contact"
+                    "follow news";
+                gap: 2rem;
+                text-align: center;
+                max-width: 100%;
+            }
+            
+            .box-logo { 
+                grid-area: logo; 
+                text-align: center;
+                grid-column: 1 / span 2;
+            }
+            
+            .box-links { 
+                grid-area: links; 
+                text-align: center;
+            }
+            
+            .box-contact { 
+                grid-area: contact; 
+                text-align: center;
+            }
+            
+            .box-follow { 
+                grid-area: follow; 
+                text-align: center;
+            }
+            
+            .box-newsletter { 
+                grid-area: news; 
+                text-align: center;
+            }
+            
+            .footer-logo {
+                font-size: 1.8rem;
+                margin: 0 auto 1rem auto;
+                text-align: center;
+                display: block;
+            }
+            
+            .footer-box h3 {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .footer-tagline {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .Searchbox {
+                margin-top: 0.8rem;
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .footer hr {
+                margin: 3rem 0 1.5rem;
+            }
+            
+            .footer-bottom {
+                font-size: 0.85rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* --- 480px (Mobile) - HERO BANNER FIXED --- */
+        @media (max-width: 480px) {
+            .header-container {
+                padding: 0 0.8rem;
+            }
+            
+            .title {
+                font-size: 1.4rem;
+            }
+            
+            .toggle-buttons button {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            /* ✅ MOBILE HERO BANNER FIXES */
+            .hero {
+                height: 60vh !important; /* Increased from 40vh */
+                min-height: 500px !important; /* Added minimum height */
+                margin-top: 0;
+                padding-top: 70px; /* Reduced padding-top */
+                padding-bottom: 30px; /* Added bottom padding */
+            }
+            
+            .hero h1 {
+                font-size: 2rem !important; /* Increased from 1.8rem */
+                margin: 20px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            .hero-content {
+                padding: 25px 20px !important; /* Increased padding */
+                max-width: 95% !important;
+            }
+            
+            .tag {
+                font-size: 0.75rem !important;
+                padding: 7px 16px !important;
+                margin-bottom: 15px !important;
+            }
+            
+            .buttons {
+                margin-top: 25px !important;
+                gap: 12px !important;
+            }
+            
+            .btn {
+                padding: 12px 28px !important;
+                font-size: 0.95rem !important;
+                min-width: 160px !important;
+            }
+            
+            .section-header h2 {
+                font-size: 1.6rem;
+            }
+            
+            .travel-card-container {
+                gap: 1rem;
+                margin-bottom: 2.5rem;
+            }
+            
+            .event-img {
+                height: 180px;
+            }
+            
+            .event-content {
+                padding: 1rem;
+            }
+            
+            .event-title {
+                font-size: 1.1rem;
+            }
+            
+            .price-tag {
+                font-size: 1.3rem;
+            }
+            
+            .event-desc {
+                font-size: 0.9rem;
+            }
+            
+            .view-btn {
+                padding: 6px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .category-tag {
+                padding: 4px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .footer-logo {
+                font-size: 1.6rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr !important;
+                grid-template-areas: 
+                    "logo"
+                    "links"
+                    "contact"
+                    "follow"
+                    "news";
+                gap: 1.5rem;
+            }
+            
+            .box-logo,
+            .box-links,
+            .box-follow,
+            .box-contact,
+            .box-newsletter {
+                grid-column: 1 !important;
+            }
+            
+            .footer-box h3 {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .Searchbox {
+                padding: 0.8rem;
+            }
+            
+            /* Mobile Navigation Updates */
+            .nav-links {
+                padding: 100px 1.5rem 2rem;
+            }
+            
+            .nav-links li a {
+                font-size: 1.1rem;
+            }
+            
+            .dropdown-menu {
+                padding-left: 1rem;
+            }
+        }
+
+        /* --- 360px (Small Mobile) - HERO BANNER FIXED --- */
+        @media (max-width: 360px) {
+            /* ✅ SMALL MOBILE HERO BANNER FIXES */
+            .hero {
+                height: 55vh !important; /* Increased from default */
+                min-height: 480px !important;
+                padding-top: 65px !important;
+                padding-bottom: 25px !important;
+            }
+            
+            .hero h1 {
+                font-size: 1.7rem !important; /* Increased from 1.5rem */
+                margin: 18px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            .hero-content {
+                padding: 20px 15px !important;
+            }
+            
+            .tag {
+                font-size: 0.7rem !important;
+                padding: 6px 14px !important;
+            }
+            
+            .btn {
+                padding: 11px 24px !important;
+                font-size: 0.9rem !important;
+                min-width: 150px !important;
+            }
+            
+            .event-img {
+                height: 160px;
+            }
+            
+            .date-badge {
+                font-size: 0.75rem;
+                padding: 4px 8px;
+            }
+            
+            .footer {
+                padding: 2rem 0.8rem 1rem;
+            }
+            
+            .nav-links {
+                padding: 90px 1rem 1.5rem;
+            }
+        }
+
+        /* --- Print Styles --- */
+        @media print {
+            .hamburger,
+            .toggle-wrapper,
+            .nav-button,
+            .buttons,
+            .view-btn {
+                display: none !important;
+            }
+            
+            .hero {
+                height: auto;
+                background: none !important;
+            }
+            
+            .overlay {
+                display: none;
+            }
+            
+            .hero-content {
+                color: #000;
+            }
+            
+            .travel-card-container {
+                grid-template-columns: repeat(2, 1fr);
+                break-inside: avoid;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="header-container">
+            <h3><a href="index.html" class="title">GrowwTravels</a></h3>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="#">Home ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">Home Page 1</a></li>
+                            <li><a href="Homepage2.html">Home Page 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="Blog.html">Blog</a></li>
+                    <li><a href="Destinations.html">Destination</a></li>
+                    <li><a href="Packages.html" class="active">Packages</a></li>
+                    <li><a href="FAQ.html">FAQ</a></li>
+                    <li><a href="TravelAbout.html">About</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="#">Dashboard ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Admin.html">Admin Dashboard</a></li>
+                            <li><a href="UserDashboard.html">User Dashboard</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="Register.html"><button class="nav-button" onclick="openRegistration()">Registration</button></a></li>
+                    <li><a href="SignIn.html"><button class="nav-button" onclick="openSignIn()">Sign In</button></a></li>
+                </ul>
+            </nav>
+
+            <div class="toggle-wrapper">
+                <div class="toggle-buttons">
+                    <button id="themeToggle" title="Toggle Theme">🌙</button>
+                    <button id="rtlToggle" title="Toggle RTL/LTR">↔</button>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <span class="tag">OUR PACKAGES</span>
+            <h1>Discover Your Perfect Adventure</h1>
+            <div class="buttons">
+                <a href="#" class="btn primary">Buy Now</a>
+                <a href="#" class="btn outline">Customize</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header">
+        <h2>Classic Gateways</h2>
+    </div>
+
+    <section class="travel-card-container">
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid silver;">⚪ Silver</span>
+                <img src="Images/Packages9.webp" alt="Singapore">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Singapore</p>
+                <div class="price-tag"><span>Start:</span> ₹58,500</div>
+                <p class="event-title">6 Days / 5 Nights</p>
+                <p class="event-desc">Experience the vibrant city life, gardens, and modern architecture.</p>
+                <div class="card-footer">
+                    <span class="category-tag">City Tour</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid silver;">⚪ Silver</span>
+                <img src="Images/Packagespic 8.jpg" alt="Sri Lanka">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Sri Lanka</p>
+                <div class="price-tag"><span>Start:</span> ₹58,500</div>
+                <p class="event-title">6 Days / 5 Nights</p>
+                <p class="event-desc">Explore the pearl of the Indian Ocean, tea gardens and beaches.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Nature</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid silver;">⚪ Silver</span>
+                <img src="Images/Packagespic1.jpg" alt="Dubai">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Dubai</p>
+                <div class="price-tag"><span>Start:</span> ₹58,500</div>
+                <p class="event-title">6 Days / 5 Nights</p>
+                <p class="event-desc">Luxury shopping, ultramodern architecture and lively nightlife.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Luxury</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header">
+        <h2>Premium Gateways</h2>
+    </div>
+    <section class="travel-card-container">
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid gold;">👑 Premium</span>
+                <img src="Images/Packagespic2.webp" alt="Bali">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Bali, Indonesia</p>
+                <div class="price-tag"><span>Start:</span> ₹89,000</div>
+                <p class="event-title">7 Days / 6 Nights</p>
+                <p class="event-desc">Exotic beaches, coral reefs and iconic rice paddies.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Beach</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid gold;">👑 Premium</span>
+                <img src="Images/Packagespic3.jpg" alt="Maldives">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Maldives</p>
+                <div class="price-tag"><span>Start:</span> ₹89,000</div>
+                <p class="event-title">5 Days / 4 Nights</p>
+                <p class="event-desc">Crystal clear waters, water villas and ultimate relaxation.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Honeymoon</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid gold;">👑 Premium</span>
+                <img src="Images/Packagespic4.webp" alt="Qatar">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Qatar, Doha</p>
+                <div class="price-tag"><span>Start:</span> ₹89,000</div>
+                <p class="event-title">5 Days / 4 Nights</p>
+                <p class="event-desc">Experience Middle Eastern hospitality and desert safaris.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Culture</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header">
+        <h2>Pro Premium Experience</h2>
+    </div>
+    <section class="travel-card-container">
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid #ff0019;">👑✨ Pro</span>
+                <img src="Images/Packagespic5.jpg" alt="Andaman">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Andaman Nicobar</p>
+                <div class="price-tag"><span>Start:</span> ₹1,35,000</div>
+                <p class="event-title">Ultimate Adventure</p>
+                <p class="event-desc">Scuba diving, private yacht tours and luxury stays.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Adventure</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid #ff0019;">👑✨ Pro</span>
+                <img src="Images/Packagespic6.jpg" alt="Andaman">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Andaman Nicobar</p>
+                <div class="price-tag"><span>Start:</span> ₹1,35,000</div>
+                <p class="event-title">Luxury Escape</p>
+                <p class="event-desc">5-Star resort stay with all meals and transfers included.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Luxury</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card">
+            <div class="event-img">
+                <span class="date-badge" style="border-left: 3px solid #ff0019;">👑✨ Pro</span>
+                <img src="Images/Packagespic7.jpg" alt="Andaman">
+            </div>
+            <div class="event-content">
+                <p class="event-location">📍 Andaman Nicobar</p>
+                <div class="price-tag"><span>Start:</span> ₹1,35,000</div>
+                <p class="event-title">Family Package</p>
+                <p class="event-desc">Explore the untouched beauty with family friendly activities.</p>
+                <div class="card-footer">
+                    <span class="category-tag">Family</span>
+                    <button class="view-btn">View More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-box box-logo">
+            <h3><a href="index.html" class="title">GrowwTravels</a></h3>
+                <p class="footer-tagline">Your trusted partner for extraordinary travel experiences since 2015.</p>
+            </div>
+            
+            <div class="footer-box box-links">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="TravelAbout.html">About</a></li>
+                    <li><a href="Packages.html">Packages</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box box-follow">
+                <h3>Follow Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box box-contact">
+                <h3>Contact</h3>
+                <p class="footpara">455 West Orchard Street<br>Kings Mountain, NC 280867</p>
+                <p class="footpara">📞 +088 (246) 642-27-10</p>
+                <p class="footpara">📧 example@gmail.com</p>
+            </div>
+            
+            <div class="footer-box box-newsletter">
+                <h3>Newsletter</h3>
+                <input type="text" placeholder="Your email address" class="Searchbox">
+            </div>
+        </div>
+        <hr>
+        <p class="footer-bottom">Copyright © 2025 Travel Agency | All rights reserved</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
+        const themeBtn = document.getElementById("themeToggle");
+        const rtlBtn = document.getElementById("rtlToggle");
+
+        // Theme Toggle with correct initial icon
+        themeBtn.textContent = "🌙";
+        
+        // Load saved theme preference
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add("dark-mode");
+                themeBtn.textContent = "🌞";
+            } else {
+                document.body.classList.remove("dark-mode");
+                themeBtn.textContent = "🌙";
+            }
+        });
+
+        // Theme toggle functionality
+        themeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            themeBtn.textContent = document.body.classList.contains("dark-mode") ? "🌞" : "🌙";
+            localStorage.setItem('theme', document.body.classList.contains("dark-mode") ? 'dark' : 'light');
+        });
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
         dropdowns.forEach(dropdown => {
             const link = dropdown.querySelector('a');
             link.addEventListener('click', (e) => {
