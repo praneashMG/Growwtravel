@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - GrowwTravels</title>
+    <link rel="icon" type="image/jpeg" href="Images\growwpark_logo.jpg">
+
+
+<style>
+    /* --- IMPORTED VARIABLES FROM TRAVELHOME --- */
+    :root {
+        /* Light Mode (Default) Variables */
+        --bg-color: #ffffff;
+        --bg-gradient: #ffffff;
+        
+        --text-main: #222222;
+        --text-secondary: #555555;
+        --text-muted: #777777;
+        
+        --accent-color: #ff0019;
+        --accent-hover: #cc0014;
+        
+        --nav-bg: rgba(255, 255, 255, 0.98);
+        --border-color: rgba(0, 0, 0, 0.1);
+        
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.12);
+        
+        --input-bg: #f0f0f0;
+        --input-text: #333;
+        
+        /* Section Backgrounds */
+        --section-bg-dark-1: #f9f9f9;
+        --section-bg-3: #fff;
+        
+        /* FAQ Specific Colors */
+        --faq-text: #222222;
+        --faq-answer-text: #555555;
+        --support-box-bg: #f9f9f9;
+        --support-box-text: #222222;
+        --support-box-secondary: #555555;
+    }
+
+
+    .dark-mode {
+        /* Dark Mode Variables */
+        --bg-color: #000000;
+        --bg-gradient: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
+        
+        --text-main: #ffffff;
+        --text-secondary: #d1d1d1;
+        --text-muted: #888888;
+        
+        --accent-color: #ff0019;
+        
+        --nav-bg: rgba(0, 0, 0, 0.85);
+        --border-color: rgba(255, 255, 255, 0.08);
+        
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+        --shadow-hover: 0 20px 40px rgba(255, 0, 25, 0.15);
+        
+        --input-bg: rgba(255, 255, 255, 0.05);
+        --input-text: #fff;
+        
+        --section-bg-dark-1: linear-gradient(135deg, #000000 0%, #111111 100%);
+        --section-bg-3: #111;
+        
+        /* FAQ Specific Colors for Dark Mode */
+        --faq-text: #222222;
+        --faq-answer-text: #333333;
+        /* Fixed: Support box colors for dark mode */
+        --support-box-bg: linear-gradient(90deg, #fafafd, #f9f4f4);
+        --support-box-text: #333333;
+        --support-box-secondary: #555555;
+    }
+
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        background-image: var(--bg-gradient);
+        background-attachment: fixed;
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+
+    /* RTL MODE STYLES */
+    .rtl {
+        direction: rtl;
+    }
+
+
+    .rtl .header-container {
+        flex-direction: row-reverse;
+    }
+
+
+    .rtl .nav-links {
+        flex-direction: row-reverse;
+    }
+
+
+    .rtl .toggle-wrapper {
+        flex-direction: row-reverse;
+    }
+
+
+    .rtl .dropdown-menu {
+        left: auto;
+        right: 0;
+    }
+
+
+    .rtl .support-container {
+        direction: rtl;
+    }
+
+
+    .rtl .left-box .badge {
+        left: auto;
+        right: 30px;
+    }
+
+
+    .rtl .stats {
+        direction: rtl;
+    }
+
+
+    .rtl .actions {
+        direction: rtl;
+    }
+
+
+    .rtl .tabs {
+        direction: rtl;
+    }
+
+
+    .rtl .faq-container {
+        direction: rtl;
+    }
+
+
+    .rtl .faq-question {
+        flex-direction: row-reverse;
+    }
+
+
+    .rtl .footer-container {
+        direction: rtl;
+    }
+
+
+    .rtl .footer-links a:hover {
+        transform: translateX(-5px);
+    }
+
+
+    .rtl nav {
+        flex-direction: row-reverse;
+    }
+
+
+    .rtl .nav-links li a::after {
+        left: auto;
+        right: 0;
+    }
+
+
+    .rtl .support-buttons {
+        direction: rtl;
+    }
+
+
+    /* --- HEADER --- */
+    header {
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        padding: 0.8rem 0;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+
+    .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+     .title {
+            color: var(--accent-color);
+            font-family: 'Poppins', sans-serif;
+            font-style:normal;
+            font-size: 1.3rem;
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 1002;
+           
+        }
+
+
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .nav-links li a {
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 0.5rem 0.2rem;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+
+    .nav-links li a:hover {
+        color: var(--accent-color);
+    }
+
+
+    .nav-links li a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: width 0.3s ease;
+    }
+
+
+    .nav-links li a:hover::after {
+        width: 100%;
+    }
+
+
+    /* Dropdown */
+    .dropdown { position: relative; }
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--nav-bg);
+        min-width: 200px;
+        border-radius: 8px;
+        box-shadow: var(--shadow-soft);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 1001;
+        padding: 0.5rem 0;
+        margin-top: 10px;
+        border: 1px solid var(--border-color);
+    }
+
+
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+
+    .dropdown-menu li { list-style: none; }
+    .dropdown-menu li a {
+        color: var(--text-main) !important;
+        display: block;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+
+    .dropdown-menu li a:hover {
+        background: var(--accent-color);
+        color: white !important;
+    }
+    .dropdown-menu li a::after { display: none; }
+
+
+    /* Nav Buttons */
+
+    .nav-links li.active a {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+    .nav-button {
+        background: transparent;
+        border: 1px solid var(--text-secondary);
+        color: var(--text-main);
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+
+    .nav-button:hover {
+        background: var(--accent-color);
+        border-color: var(--accent-color);
+        color: white;
+    }
+
+
+    /* Toggles */
+    .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    .toggle-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+
+    .toggle-buttons button {
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+
+    .toggle-buttons button:hover {
+        background: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+        transform: scale(1.1);
+    }
+
+
+    /* Hamburger */
+    .hamburger {
+        display: none;
+        cursor: pointer;
+        width: 30px;
+        height: 24px;
+        position: relative;
+        z-index: 1003;
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+    .hamburger span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: var(--text-main);
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+    .hamburger span:nth-child(1) { top: 0px; }
+    .hamburger span:nth-child(2) { top: 10px; }
+    .hamburger span:nth-child(3) { top: 20px; }
+    .hamburger.active span:nth-child(1) { top: 10px; transform: rotate(135deg); background: var(--accent-color); }
+    .hamburger.active span:nth-child(2) { opacity: 0; left: -60px; }
+    .hamburger.active span:nth-child(3) { top: 10px; transform: rotate(-135deg); background: var(--accent-color); }
+
+
+    /* --- FAQ PAGE SPECIFIC STYLES --- */
+    
+    .support-section {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url(Images/Destinations.webp);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0; /* CHANGED: Removed extra margin */
+      padding: 120px 20px 60px; /* CHANGED: Adjusted padding */
+    }
+
+
+    .support-container {
+      position: relative;
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      max-width: 1200px;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+
+    .left-box {
+      width: 45%;
+      height: 460px;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+    }
+
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .left-box .badge {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: var(--accent-color);
+      padding: 8px 18px;
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+
+    .right-content {
+      width: 50%;
+    }
+
+
+    .help-tag {
+      background: var(--accent-color);
+      padding: 6px 18px;
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+
+    .right-content h1 {
+      font-size: 3.5rem;
+      color: white;
+      line-height: 1.1;
+      margin: 25px 0;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+
+    .right-content p {
+      font-size: 1.1rem;
+      color: #e0e0e0;
+      line-height: 1.6;
+      max-width: 450px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+
+    .stats {
+      margin: 30px 0;
+      display: flex;
+      gap: 40px;
+      font-size: 15px;
+    }
+
+
+    .stats strong {
+      font-size: 26px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    
+    .stats div {
+        color: #ddd;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+
+    .actions {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+
+    .btn {
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+
+    .btn.primary {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+    }
+
+
+    .btn.primary:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+    }
+
+
+    .btn.outline {
+      border: 2px solid white;
+      background: transparent;
+      color: white;
+    }
+    
+    .btn.outline:hover {
+        background: white;
+        color: black;
+        transform: translateY(-2px);
+    }
+
+
+    .heading{
+        text-align:center;
+        font-size:32px;
+        margin: 60px 0 20px;
+        color: var(--text-main);
+    }
+
+
+    .subtitle {
+     color: var(--text-secondary);
+     max-width: 600px;
+     margin: 12px auto 40px;
+     font-size: 18px;
+     text-align: center;
+    }
+
+
+    .tabs {
+     display: flex;
+     gap: 12px;
+     justify-content: center;
+     margin-bottom: 50px;
+     flex-wrap: wrap;
+    }
+
+
+    .tab {
+     padding: 12px 25px;
+     background: var(--input-bg);
+     border: 1px solid var(--border-color);
+     border-radius: 30px;
+     cursor: pointer;
+     font-size: 16px;
+     transition: 0.3s;
+     color: var(--text-main);
+    }
+    
+    .dark-mode .tab { background: #f3f4f6; color: #333; }
+
+
+    .tab.active {
+     background: var(--accent-color);
+     color: white;
+     border-color: var(--accent-color);
+    }
+
+
+    .faq-container {
+     max-width: 850px;
+     margin: auto;
+     display: flex;
+     flex-direction: column;
+     gap: 18px;
+     padding: 0 20px;
+    }
+
+
+    .faq {
+     background: var(--section-bg-3);
+     padding: 20px;
+     border-radius: 12px;
+     box-shadow: var(--shadow-soft);
+     cursor: pointer;
+     transition: 0.3s;
+     border: 1px solid var(--border-color);
+    }
+    
+    /* CHANGED: Force white background and black text for FAQ in dark mode */
+    .dark-mode .faq {
+        background: #ffffff !important;
+        border: 1px solid #eee;
+    }
+
+
+    .faq-question {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     font-size: 18px;
+     font-weight: 600;
+     /* CHANGED: Use FAQ-specific text color */
+     color: var(--faq-text);
+    }
+
+
+    .arrow {
+     transition: 0.3s;
+     font-size: 22px;
+     color: var(--accent-color);
+    }
+
+
+    .faq-answer {
+     max-height: 0;
+     overflow: hidden;
+     /* CHANGED: Use FAQ-specific answer text color */
+     color: var(--faq-answer-text);
+     font-size: 16px;
+     margin-top: 5px;
+     line-height: 1.6;
+     transition: max-height 0.4s ease;
+    }
+
+
+    .faq.open .arrow {
+     transform: rotate(180deg);
+    }
+
+
+    .faq.open .faq-answer {
+     padding-top: 10px;
+     max-height: 200px;
+    }
+    
+    .support-section1 {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 80px;
+      padding: 0 20px;
+    }
+
+
+    .support-box {
+      width: 100%;
+      max-width: 900px;
+      background: var(--support-box-bg); /* UPDATED: Use variable */
+      padding: 60px 40px;
+      border-radius: 22px;
+      text-align: center;
+      color: var(--support-box-text); /* UPDATED: Use variable */
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-color);
+    }
+    
+    .dark-mode .support-box {
+        background: linear-gradient(90deg, #fafafd, #f9f4f4);
+        color: var(--support-box-text); /* UPDATED: Use variable */
+        border: 1px solid #eee;
+    }
+
+
+    .support-box h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: var(--support-box-text); /* UPDATED: Use variable */
+    }
+
+
+    .support-box p {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      color: var(--support-box-secondary); /* UPDATED: Use variable */
+    }
+
+
+    .support-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .support-buttons .btn.outline {
+        border-color: var(--support-box-text); /* UPDATED: Use variable */
+        color: var(--support-box-text); /* UPDATED: Use variable */
+        background: transparent;
+    }
+    
+    .dark-mode .support-buttons .btn.outline {
+        border-color: #333;
+        color: #333;
+        background: transparent;
+    }
+    
+    .dark-mode .support-buttons .btn.outline:hover {
+        background: #333;
+        color: white;
+    }
+
+    .support-buttons .btn.primary {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+    }
+    
+    .dark-mode .support-buttons .btn.primary {
+        background: var(--accent-color);
+        color: white;
+    }
+
+    /* Category indicator for FAQs */
+    .faq-category {
+        display: inline-block;
+        padding: 3px 10px;
+        background: var(--accent-color);
+        color: white;
+        font-size: 12px;
+        border-radius: 12px;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+
+    .rtl .faq-category {
+        margin-left: 0;
+        margin-right: 10px;
+    }
+
+    /* Empty state for filtered categories */
+    .no-faqs {
+        text-align: center;
+        padding: 40px;
+        color: var(--text-secondary);
+        font-size: 18px;
+        display: none;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+        background: #f8f8f8;
+        padding: 5rem 2rem 2rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 60px;
+    }
+    
+    .dark-mode .footer {
+        background: #000000;
+        color: #fff;
+        border-top: 1px solid var(--border-color);
+    }
+
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+    }
+
+
+    .footer-logo {
+        color: var(--accent-color);
+        font-family: 'Poppins', sans-serif;
+        font-style: normal;
+        font-size: 2rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        z-index: 1002;
+        margin: 5px 0;
+    }
+
+
+    .footer-box h3 { color: var(--text-main); margin-bottom: 1.5rem; font-size: 1.2rem; }
+    .footer-box h5 { color: var(--text-secondary); font-weight: normal; line-height: 1.6; margin-bottom: 1rem; }
+    
+    .footer-links {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+
+    .footer-links li {
+        list-style-type: none !important;
+        margin-bottom: 0.8rem;
+    }
+
+
+    .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: block; 
+    }
+    .footer-links a:hover { color: var(--accent-color); transform: translateX(5px); }
+
+
+    .Searchbox {
+        width: 100%;
+        padding: 1rem;
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--input-text);
+        margin-top: 1rem;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+    
+    .Searchbox:focus { border-color: var(--accent-color); }
+    .Searchbox::placeholder { color: var(--text-muted); }
+
+
+    .footer hr {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 4rem 0 2rem;
+    }
+
+
+    .footer-bottom { text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+
+
+    /* --- RESPONSIVENESS --- */
+    @media (min-width: 1023px) and (max-width: 1024px) {
+        /* Hamburger ONLY for 1024x768 */
+        .nav-links {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: #ffffff;
+            flex-direction: column !important; /* FORCE COLUMN */
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateX(100%);
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+            gap: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .dark-mode .nav-links { background: #000000; }
+        
+        .nav-links.active { transform: translateX(0); opacity: 1; visibility: visible; }
+        .hamburger { display: block; z-index: 1003; }
+        
+        .dropdown-menu {
+            position: static; opacity: 1; visibility: visible;
+            transform: none; background: transparent;
+            box-shadow: none; display: none;
+            border: none; text-align: center;
+            padding-top: 0.5rem;
+            margin-top: 0;
+        }
+        .dropdown.active .dropdown-menu { display: block; animation: fadeIn 0.3s ease; }
+        .dropdown-menu li a { color: var(--text-secondary) !important; font-size: 1rem; padding: 0.5rem; }
+        .nav-links li a { font-size: 1.2rem; }
+        
+        /* RTL MOBILE FIX - FORCE COLUMN LAYOUT */
+        .rtl .nav-links {
+            flex-direction: column !important; /* OVERRIDE RTL ROW-REVERSE */
+            left: 0;
+            right: auto;
+            text-align: center;
+            transform: translateX(100%);
+        }
+        
+        .rtl .nav-links.active {
+            transform: translateX(0);
+        }
+    }
+    
+    @media (max-width: 992px) {
+        /* FAQ Hero Responsive Fix */
+        .support-section { 
+
+            padding: 100px 20px 40px; /* Adjusted padding for mobile */
+            align-items: center;
+        }
+        
+        .support-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+        }
+        
+        .left-box { 
+            width: 100%; 
+            max-width: 450px;
+            height: 350px; 
+        }
+        
+        .right-content { 
+            width: 100%; 
+        }
+        
+        .right-content h1 { font-size: 3rem; }
+        
+        .stats { 
+            justify-content: center; 
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .actions { justify-content: center; }
+    }
+
+    /* === TABLET RESPONSIVE (769px - 1024px) - FOOTER 2x3 LAYOUT EXACTLY AS IMAGE === */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .footer {
+            padding: 4rem 3rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 3rem 4rem;
+            text-align: left;
+        }
+        
+        /* ROW 1: Logo Section - Centered, Spans Both Columns */
+        .footer-box:nth-child(1) {
+            grid-column: 1 / -1;
+            grid-row: 1;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo {
+            font-size: 2.2rem;
+            margin: 0 auto 0.8rem auto;
+            display: block;
+        }
+        
+        .footer-box:nth-child(1) h5 {
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        
+        /* ROW 2: Quick Links (Left) | Contact (Right) */
+        .footer-box:nth-child(2) {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .footer-box:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        /* ROW 3: Follow Us (Left) | Newsletter (Right) */
+        .footer-box:nth-child(4) {
+            grid-column: 1;
+            grid-row: 3;
+        }
+        
+        .footer-box:nth-child(5) {
+            grid-column: 2;
+            grid-row: 3;
+        }
+        
+        /* Footer Box Styling */
+        .footer-box {
+            margin-bottom: 0;
+        }
+        
+        .footer-box h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        
+        .footer-links {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.7rem;
+        }
+        
+        .footer-links a {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(3px);
+        }
+        
+        /* Contact Section */
+        .footer-box:nth-child(3) h5 {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 0.9rem;
+        }
+        
+        /* Newsletter Section */
+        .Searchbox {
+            padding: 0.9rem;
+            font-size: 0.95rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        
+        /* Footer Bottom */
+        .footer hr {
+            margin: 3rem 0 1.5rem;
+        }
+        
+        .footer-bottom {
+            font-size: 0.85rem;
+        }
+    }
+
+
+    @media (max-width: 768px) {
+        /* Hamburger Menu for Mobile and Tablet Portrait */
+        .nav-links {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: #ffffff;
+            flex-direction: column !important;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transform: translateX(100%);
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+            gap: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .dark-mode .nav-links { background: #000000; }
+        
+        .nav-links.active { transform: translateX(0); opacity: 1; visibility: visible; }
+        .hamburger { display: block; z-index: 1003; }
+        
+        .dropdown-menu {
+            position: static; opacity: 1; visibility: visible;
+            transform: none; background: transparent;
+            box-shadow: none; display: none;
+            border: none; text-align: center;
+            padding-top: 0.5rem;
+            margin-top: 0;
+        }
+        .dropdown.active .dropdown-menu { display: block; animation: fadeIn 0.3s ease; }
+        .dropdown-menu li a { color: var(--text-secondary) !important; font-size: 1rem; padding: 0.5rem; }
+        .nav-links li a { font-size: 1.2rem; }
+        
+        .rtl .nav-links {
+            flex-direction: column !important;
+            left: 0;
+            right: auto;
+            text-align: center;
+            transform: translateX(100%);
+        }
+        
+        .rtl .nav-links.active {
+            transform: translateX(0);
+        }
+        
+        /* FOOTER 2x3 FORMAT FOR TABLET 768px */
+        .footer {
+
+            padding: 4rem 1.5rem 2rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            grid-template-areas: 
+                "logo logo"
+                "links contact"
+                "follow news";
+            gap: 2rem;
+            text-align: center;
+            max-width: 100%;
+        }
+        
+        .footer-box:nth-child(1) { 
+            grid-area: logo; 
+            text-align: center;
+            grid-column: 1 / span 2;
+        }
+        
+        .footer-box:nth-child(2) { 
+            grid-area: links; 
+            text-align: center;
+        }
+        
+        .footer-box:nth-child(3) { 
+            grid-area: contact; 
+            text-align: center;
+        }
+        
+        .footer-box:nth-child(4) { 
+            grid-area: follow; 
+            text-align: center;
+        }
+        
+        .footer-box:nth-child(5) { 
+            grid-area: news; 
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin: 0 auto 1rem auto;
+            text-align: center;
+            display: block;
+        }
+        
+        .footer-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-box h5 {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .Searchbox {
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer hr {
+            margin: 3rem 0 1.5rem;
+        }
+        
+        .footer-bottom {
+            font-size: 0.85rem;
+            padding: 0 1rem;
+        }
+        
+        .right-content h1 { font-size: 2.5rem; }
+        .support-box { padding: 40px 20px; }
+        .support-box h2 { font-size: 26px; }
+        
+        /* Adjust support-section padding for better mobile view */
+        .support-section {
+            padding: 100px 15px 40px;
+        }
+    }
+
+
+    @media (max-width: 480px) {
+        .header-container { padding: 0 1rem; }
+        .left-box { height: 250px; }
+        .right-content h1 { font-size: 2rem; }
+        .support-buttons { flex-direction: column; }
+        .btn { width: 100%; }
+        
+        .stats {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .support-section {
+            padding: 90px 10px 30px;
+        }
+        
+        .footer-container { 
+            grid-template-columns: 1fr; 
+            grid-template-areas: 
+                "logo"
+                "links"
+                "contact"
+                "follow"
+                "news";
+            gap: 1.5rem;
+        }
+        
+        .footer-box:nth-child(1) { 
+            grid-column: 1;
+        }
+        
+        .faq-category {
+            font-size: 10px;
+            padding: 2px 8px;
+        }
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h3><a href="index.html" class="title">GrowwTravels</a></h3>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="#">Home ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">Home Page 1</a></li>
+                            <li><a href="Homepage2.html">Home Page 2</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="Blog.html">Blog</a></li>
+                    <li><a href="Destinations.html">Destination</a></li>
+                    <li><a href="Packages.html">Packages</a></li>
+                     <li class="active"><a href="FAQ.html">FAQ</a></li>
+
+
+                    <li><a href="TravelAbout.html">About</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    
+                    <li class="dropdown">
+                        <a href="#">Dashboard ▾</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Admin.html">Admin Dashboard</a></li>
+                            <li><a href="UserDashboard.html">User Dashboard</a></li>
+                        </ul>
+                    </li>
+
+
+                    <a href="Register.html"><li><button class="nav-button" onclick="openRegistration()">Registration</button></li></a>
+                    <a href="SignIn.html"><li><button class="nav-button" onclick="openSignIn()">Sign In</button></li></a>
+                </ul>
+            </nav>
+
+
+            <div class="toggle-wrapper">
+                <div class="toggle-buttons">
+                    <button id="themeToggle" title="Toggle Theme">🌞</button>
+                    <button id="rtlToggle" title="Toggle RTL/LTR">↔</button>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="support-section">
+      <div class="support-container">
+        <div class="left-box">
+          <img src="Images/france.jpg" class="hero-image" alt="Support">
+          
+       </div>
+
+
+        <div class="right-content">
+          <span class="help-tag">❓ Help Center</span>
+          <h1>Get Your<br>Questions<br>Answered</h1>
+          <p>
+            Find answers to all your travel questions. Browse our
+            comprehensive FAQ section or contact our support team
+            for personalized assistance.
+          </p>
+
+
+          <div class="stats">
+            <div><strong>50+</strong><br>FAQs Available</div>
+            <div><strong>24/7</strong><br>Live Support</div>
+            <div><strong>&lt; 1hr</strong><br>Response Time</div>
+          </div>
+
+
+          <div class="actions">
+            <button class="btn primary" onclick="scrollToFAQs()">🔍 Browse FAQs</button>
+            <button class="btn outline">📞 Contact Support</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <br><br><br>
+
+
+    <div class="heading">Help Center</div>
+    <h1 class="heading" style="margin-top:0;">Frequently Asked Questions</h1>
+    <p class="subtitle">Find answers to common questions about our travel platform, services, and processes.</p>
+
+
+    <div class="tabs">
+     <button class="tab active" data-category="all">All Questions</button>
+     <button class="tab" data-category="general">General</button>
+     <button class="tab" data-category="booking">Booking</button>
+     <button class="tab" data-category="travel">Travel</button>
+     <button class="tab" data-category="payments">Payments</button>
+    </div>
+
+
+    <div class="faq-container">
+     <!-- Empty state message -->
+     <div class="no-faqs">
+        No FAQs found in this category. Please try another category.
+     </div>
+     
+     <div class="faq" data-category="general">
+       <div class="faq-question">
+         <span>1. What documents do I need for international travel? </span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        You will need a valid passport, visa (depending on the destination), and travel insurance. Some countries may also require proof of accommodation, return tickets, or vaccination certificates.   </div>
+     </div>
+
+
+     <div class="faq" data-category="booking">
+       <div class="faq-question">
+         <span>2. When should I book my flights and hotels for the best price? </span>
+        <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        For international trips, booking 2–3 months in advance usually gives the best deals. For domestic trips, 3–6 weeks before departure is ideal.   </div>
+     </div>
+
+
+     <div class="faq" data-category="general">
+       <div class="faq-question">
+         <span>3. Do I need travel insurance? </span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Travel insurance is highly recommended as it protects you from unexpected events like trip cancellation, medical emergencies, lost baggage, and flight delays.   </div>
+     </div>
+
+
+     <div class="faq" data-category="travel">
+       <div class="faq-question">
+         <span>4. What is the baggage allowance for my trip?</span>
+        <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Baggage allowance varies depending on the airline and ticket type. Economy travelers typically get 15–23 kg checked baggage and 7–10 kg carry-on, but always check with your airline before traveling.   </div>
+     </div>
+
+
+     <div class="faq" data-category="travel">
+       <div class="faq-question">
+         <span>5. How can I stay safe while traveling? </span>
+        <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Keep copies of your documents, avoid carrying too much cash, use official transport services, and stay aware of your surroundings. Always follow local laws and customs.   </div>
+     </div>
+
+
+     <div class="faq" data-category="general">
+       <div class="faq-question">
+         <span>6. Can I use my phone internationally? </span>
+       <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Yes, but roaming charges may apply. You can activate international roaming, buy a local SIM at the destination, or use an eSIM for cost-effective internet.   </div>
+     </div>
+     
+    <div class="faq" data-category="travel">
+       <div class="faq-question">
+         <span>7. What should I pack for my trip? </span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Pack essentials like clothes suitable for the weather, travel-sized toiletries, medication, travel chargers, and universal adapters. Always leave space for souvenirs!   </div>
+     </div>
+     
+    <div class="faq" data-category="payments">
+       <div class="faq-question">
+         <span>8. What payment methods are accepted abroad? </span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Credit and debit cards are widely accepted in most countries. However, carry some local currency for small purchases, transport, or remote areas.   </div>
+     </div>
+     
+     <div class="faq" data-category="booking">
+       <div class="faq-question">
+         <span>9. Can I modify or cancel my booking?</span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Yes, most bookings can be modified or cancelled, but terms vary by provider. Check the cancellation policy before booking and contact our support team for assistance.   </div>
+     </div>
+     
+     <div class="faq" data-category="payments">
+       <div class="faq-question">
+         <span>10. Are there any hidden fees? </span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        We believe in transparent pricing. All taxes and service fees are clearly displayed during booking. Some destinations may have local tourism taxes payable on arrival.   </div>
+     </div>
+     
+     <div class="faq" data-category="general">
+       <div class="faq-question">
+         <span>11. Do you offer group discounts?</span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        Yes, we offer special discounts for groups of 10 or more. Contact our group travel specialists for customized packages and pricing.   </div>
+     </div>
+     
+     <div class="faq" data-category="travel">
+       <div class="faq-question">
+         <span>12. What happens if my flight is delayed?</span>
+         <strong class="arrow">˅</strong>
+       </div>
+       <div class="faq-answer">
+        If your flight is significantly delayed, contact the airline first. If you booked through us, our 24/7 support team can assist with rebooking and accommodation if needed.   </div>
+     </div>
+    </div>
+
+
+    <section class="support-section1">
+      <div class="support-box">
+        <h2>Still Have Questions?</h2>
+        <p>Our support team is here to help you 24/7</p>
+
+
+        <div class="support-buttons">
+          <button class="btn primary">✉ Email Support</button>
+          <button class="btn outline">☎ Call Us</button>
+        </div>
+      </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-box">
+            <h3><a href="index.html" class="title">GrowwTravels</a></h3>
+                <h5>Your trusted partner for extraordinary travel experiences since 2015.</h5>
+            </div>
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="TravelHome.html">Home</a></li>
+                    <li><a href="TravelAbout.html">About</a></li>
+                    <li ><a href="Packages.html">Packages</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <h3>Contact</h3>
+                <h5 class="footpara">455 West Orchard Street<br>Kings Mountain, NC 280867</h5>
+                <h5 class="footpara">📞 +088 (246) 642-27-10</h5>
+                <h5 class="footpara">📧 example@gmail.com</h5>
+            </div>
+            <div class="footer-box">
+                <h3>Follow Us</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <h3>Newsletter</h3>
+                <input type="text" placeholder="Your email address" class="Searchbox">
+            </div>
+        </div>
+        <hr>
+        <p class="footer-bottom">Copyright © 2025 Travel Agency | All rights reserved</p>
+    </footer>
+
+
+    <script>
+        // Navbar Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
+        const themeBtn = document.getElementById("themeToggle");
+        const rtlBtn = document.getElementById("rtlToggle");
+
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+
+        dropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('a');
+            link.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(otherDropdown => {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+
+
+        // Theme Toggle - Light mode is default
+        themeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            themeBtn.textContent = document.body.classList.contains("dark-mode") ? "🌗" : "🌞";
+            
+            // Save preference to localStorage
+            localStorage.setItem('theme', document.body.classList.contains("dark-mode") ? 'dark' : 'light');
+        });
+
+
+        // Check for saved theme preference on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add("dark-mode");
+            themeBtn.textContent = "🌗";
+        } else {
+            // Default is light mode
+            document.body.classList.remove("dark-mode");
+            themeBtn.textContent = "🌞";
+        }
+
+
+        // RTL Toggle
+        rtlBtn.addEventListener("click", () => {
+            document.body.classList.toggle("rtl");
+            rtlBtn.textContent = document.body.classList.contains("rtl") ? "↪" : "↔";
+            
+            // Save RTL preference
+            localStorage.setItem('rtl', document.body.classList.contains("rtl") ? 'true' : 'false');
+        });
+
+
+        // Check for saved RTL preference
+        const savedRTL = localStorage.getItem('rtl');
+        if (savedRTL === 'true') {
+            document.body.classList.add("rtl");
+            rtlBtn.textContent = "↪";
+        }
+
+
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992) {
+                if (!e.target.closest('.nav-links') && !e.target.closest('#hamburger')) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            }
+        });
+
+
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+
+        // FAQ Logic
+        const faqs = document.querySelectorAll(".faq");
+        faqs.forEach(faq => {
+           faq.addEventListener("click", () => {
+              faq.classList.toggle("open");
+           });
+        });
+
+        // FAQ Category Filtering
+        const tabs = document.querySelectorAll('.tab');
+        const allFaqs = document.querySelectorAll('.faq');
+        const noFaqsMessage = document.querySelector('.no-faqs');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                const category = tab.getAttribute('data-category');
+                
+                // Show/hide FAQs based on category
+                let visibleCount = 0;
+                
+                allFaqs.forEach(faq => {
+                    const faqCategory = faq.getAttribute('data-category');
+                    
+                    if (category === 'all' || category === faqCategory) {
+                        faq.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        faq.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide empty state message
+                if (visibleCount === 0) {
+                    noFaqsMessage.style.display = 'block';
+                } else {
+                    noFaqsMessage.style.display = 'none';
+                }
+                
+                // Close all FAQs when switching categories
+                faqs.forEach(faq => {
+                    faq.classList.remove('open');
+                });
+                
+                // Smooth scroll to FAQ section
+                const faqSection = document.querySelector('.faq-container');
+                faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Function to scroll to FAQs
+        function scrollToFAQs() {
+            const faqSection = document.querySelector('.faq-container');
+            faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Placeholder Alerts
+        function openRegistration() { alert('Registration form will open here.'); }
+        function openSignIn() { alert('Sign In form will open here.'); }
+        function openPlanning() { alert('Start planning your trip!'); }
+        function playVideo() { alert('Travel video will play here.'); }
+        function learnMore() { alert('Learn more about our services.'); }
+    </script>
+</body>
+</html>

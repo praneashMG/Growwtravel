@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Login - GrowwTravels</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/jpeg" href="Images\growwpark_logo.jpg">
+
+<style>
+    /* --- GLOBAL VARIABLES --- */
+    :root {
+        --bg-overlay: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+        --form-bg: #ffffff;
+        --text-main: #333;
+        --text-secondary: #666;
+        --input-bg: #f9f9f9;
+        --border-color: #ddd;
+        --accent-color: #ff0019;
+        --accent-hover: #cc0014;
+        --nav-bg: rgba(255, 255, 255, 0.95);
+        --nav-text: #333333;
+        --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.3);
+        --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* DARK MODE VARIABLES */
+    .dark-mode {
+        --form-bg: #1a1a1a;
+        --text-main: #ffffff;
+        --text-secondary: #cccccc;
+        --input-bg: #2a2a2a;
+        --border-color: #444;
+        --nav-bg: rgba(0, 0, 0, 0.85);
+        --nav-text: #ffffff;
+        --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.7);
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.5);
+        --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-overlay), 
+                    url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        /* Light mode active by default */
+        color: var(--text-main);
+    }
+
+    /* --- HEADER / NAVBAR --- */
+    header {
+        background: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 0.8rem 0;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .dark-mode header {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+      .title {
+            color: var(--accent-color);
+            font-family: 'Poppins', sans-serif;
+            font-style:normal;
+            font-size: 1.3rem;
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 1002;
+           
+        }
+
+
+    /* Toggle Buttons */
+    .toggle-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .toggle-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .toggle-buttons button {
+        background: #eee;
+        border: 1px solid #ccc;
+        color: #333;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .dark-mode .toggle-buttons button {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--nav-text);
+    }
+
+    .toggle-buttons button:hover {
+        background: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+        transform: scale(1.1);
+    }
+
+    /* --- LOGIN SECTION --- */
+    .RegOne {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 100px 20px 40px;
+        width: 100%;
+    }
+
+    .login-wrapper {
+        background: var(--form-bg);
+        width: 100%;
+        max-width: 900px;
+        border-radius: 20px;
+        display: flex;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        min-height: 600px;
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+        margin: 0 auto;
+    }
+
+    /* Left Section (Welcome) */
+    .welcome-box {
+        width: 50%;
+        padding: 60px 40px;
+        position: relative;
+        color: white;
+        background: linear-gradient(135deg, #ff0019, #8a0512);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .welcome-box h2 {
+        font-size: clamp(32px, 3vw, 42px);
+        font-weight: 700;
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+
+    .subtitle {
+        font-size: clamp(16px, 1.5vw, 18px);
+        font-weight: 300;
+        letter-spacing: 1px;
+        margin-bottom: 25px;
+        opacity: 0.9;
+    }
+
+    .description {
+        font-size: clamp(13px, 1.2vw, 14px);
+        line-height: 1.6;
+        opacity: 0.8;
+        max-width: 350px;
+    }
+
+    /* Abstract Shapes */
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        z-index: -1;
+    }
+    .c1 { width: 200px; height: 200px; top: -50px; left: -50px; }
+    .c2 { width: 150px; height: 150px; bottom: -30px; right: -30px; }
+    .c3 { width: 80px; height: 80px; top: 40%; right: 20px; }
+
+    /* Right Section (Form) */
+    .form-box {
+        width: 50%;
+        padding: 60px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-box h2 {
+        margin-bottom: 10px;
+        font-size: clamp(28px, 2.5vw, 32px);
+        color: var(--text-main);
+        font-weight: 600;
+    }
+    
+    .form-desc {
+        color: var(--text-secondary);
+        margin-bottom: 30px;
+        font-size: clamp(13px, 1.2vw, 14px);
+    }
+
+    /* Input Fields */
+    .input-field {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-field i {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #888;
+        font-size: 16px;
+    }
+
+    .dark-mode .input-field i {
+        color: #aaa;
+    }
+
+    .input-field input {
+        width: 100%;
+        padding: 15px 45px;
+        border: 1px solid var(--border-color);
+        background: var(--input-bg);
+        color: var(--text-main);
+        border-radius: 10px;
+        outline: none;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        transition: 0.3s;
+    }
+
+    .input-field input:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 4px rgba(255, 0, 25, 0.1);
+    }
+
+    .show-pass {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888;
+        font-size: 14px;
+        left: auto !important;
+    }
+
+    .dark-mode .show-pass {
+        color: #aaa;
+    }
+
+    /* Options */
+    .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .options a {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .options a:hover { text-decoration: underline; }
+
+    /* Buttons */
+    .btn-primary {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        background: var(--accent-color);
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        font-family: 'Poppins', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary:hover { 
+        background: var(--accent-hover); 
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .divider {
+        text-align: center;
+        margin: 20px 0;
+        position: relative;
+        font-size: 13px;
+        color: var(--text-secondary);
+    }
+    
+    .divider::before, .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background: var(--border-color);
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .social-login { 
+        display: flex; 
+        gap: 15px; 
+        flex-wrap: wrap;
+    }
+
+    .login-btn {
+        flex: 1;
+        min-width: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px;
+        font-size: 14px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--input-bg);
+        color: var(--text-main);
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-btn:hover { 
+        border-color: var(--accent-color);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .signup-text {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+
+    .signup-text a {
+        color: var(--accent-color);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    /* RTL Class */
+    .rtl { direction: rtl; text-align: right; }
+    .rtl .header-container { flex-direction: row-reverse; }
+    .rtl .login-wrapper { flex-direction: row-reverse; }
+    
+    .rtl .input-field i { right: 15px; left: auto; }
+    .rtl .input-field input { padding: 15px 45px 15px 15px; }
+    .rtl .show-pass { left: 15px; right: auto !important; }
+    .rtl .options { flex-direction: row-reverse; }
+
+    /* =========================================
+       PROFESSIONAL RESPONSIVE BREAKPOINTS
+       ========================================= */
+
+    /* LAPTOP LARGE: 1440px and above (default styles already cover this) */
+
+    /* LAPTOP: 1280px - 1440px */
+    @media (max-width: 1440px) {
+        .login-wrapper {
+            max-width: 850px;
+            min-height: 580px;
+        }
+        
+        .welcome-box {
+            padding: 50px 35px;
+        }
+        
+        .form-box {
+            padding: 50px 40px;
+        }
+    }
+
+    /* TABLET LANDSCAPE: 1024px - 1280px */
+    @media (max-width: 1280px) {
+        .login-wrapper {
+            max-width: 800px;
+            min-height: 560px;
+            border-radius: 18px;
+        }
+        
+        .header-container {
+            padding: 0 1.5rem;
+        }
+        
+        .welcome-box {
+            padding: 45px 30px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 30px;
+        }
+        
+        .form-box {
+            padding: 45px 35px;
+        }
+        
+        .form-box h2 {
+            font-size: 26px;
+        }
+        
+        .social-login {
+            gap: 12px;
+        }
+        
+        .login-btn {
+            min-width: 130px;
+        }
+    }
+
+    /* TABLET PORTRAIT: 768px - 1024px */
+    @media (max-width: 1024px) {
+        .RegOne {
+            padding: 90px 15px 30px;
+        }
+        
+        .login-wrapper {
+            max-width: 700px;
+            min-height: 540px;
+            border-radius: 16px;
+        }
+        
+        .header-container {
+            padding: 0 1.25rem;
+        }
+        
+        .welcome-box {
+            padding: 40px 25px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .description {
+            font-size: 13px;
+            max-width: 300px;
+        }
+        
+        .form-box {
+            padding: 40px 30px;
+        }
+        
+        .form-box h2 {
+            font-size: 24px;
+        }
+        
+        .input-field input {
+            padding: 14px 40px;
+            font-size: 14px;
+        }
+        
+        .input-field i {
+            font-size: 15px;
+            left: 12px;
+        }
+        
+        .btn-primary {
+            padding: 14px;
+            font-size: 15px;
+        }
+        
+        .social-login {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            min-width: auto;
+        }
+        
+        /* Hide the small circle on tablets */
+        .c3 {
+            display: none;
+        }
+    }
+
+    /* SMALL TABLET / LARGE MOBILE: 600px - 768px */
+    @media (max-width: 768px) {
+        .RegOne {
+            padding: 80px 12px 20px;
+            align-items: flex-start;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .login-wrapper {
+            flex-direction: column;
+            max-width: 100%;
+            min-height: auto;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            margin: 0;
+        }
+        
+        .header-container {
+            padding: 0 1rem;
+        }
+        
+        .welcome-box {
+            width: 100%;
+            padding: 40px 25px;
+            text-align: center;
+            min-height: 250px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 26px;
+        }
+        
+        .description {
+            margin: 0 auto;
+            max-width: 100%;
+            font-size: 14px;
+        }
+        
+        /* Hide all decorative circles on mobile */
+        .circle {
+            display: none;
+        }
+        
+        .form-box {
+            width: 100%;
+            padding: 40px 25px;
+        }
+        
+        .form-box h2 {
+            font-size: 24px;
+        }
+        
+        .form-desc {
+            font-size: 13px;
+        }
+        
+        /* Fix RTL for mobile stacking */
+        .rtl .login-wrapper {
+            flex-direction: column;
+        }
+    }
+
+    /* MOBILE: 480px - 600px */
+    @media (max-width: 600px) {
+        .RegOne {
+            padding: 70px 10px 15px;
+        }
+        
+        .header-container {
+            padding: 0 0.8rem;
+        }
+        
+        .title {
+            font-size: 1.4rem;
+        }
+        
+        .toggle-buttons button {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+        }
+        
+        .welcome-box {
+            padding: 35px 20px;
+            min-height: 220px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 24px;
+        }
+        
+        .subtitle {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            font-size: 13px;
+        }
+        
+        .form-box {
+            padding: 35px 20px;
+        }
+        
+        .form-box h2 {
+            font-size: 22px;
+        }
+        
+        .form-desc {
+            font-size: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .input-field {
+            margin-bottom: 18px;
+        }
+        
+        .input-field input {
+            padding: 13px 40px;
+            font-size: 14px;
+        }
+        
+        .input-field i {
+            font-size: 14px;
+            left: 10px;
+        }
+        
+        .btn-primary {
+            padding: 13px;
+            font-size: 14px;
+        }
+        
+        .signup-text {
+            font-size: 13px;
+            margin-top: 25px;
+        }
+        
+        .rtl .input-field i {
+            right: 10px;
+        }
+    }
+
+    /* SMALL MOBILE: 480px and below */
+    @media (max-width: 480px) {
+        .RegOne {
+            padding: 65px 8px 12px;
+        }
+        
+        .header-container {
+            padding: 0 0.6rem;
+        }
+        
+        .title {
+            font-size: 1.3rem;
+        }
+        
+        .welcome-box {
+            padding: 30px 18px;
+            min-height: 200px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 22px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+        }
+        
+        .form-box {
+            padding: 30px 18px;
+        }
+        
+        .form-box h2 {
+            font-size: 20px;
+        }
+        
+        .options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .social-login {
+            gap: 8px;
+        }
+        
+        .login-btn {
+            padding: 10px;
+            font-size: 13px;
+        }
+        
+        .login-btn img {
+            width: 18px;
+        }
+        
+        .divider {
+            margin: 15px 0;
+            font-size: 12px;
+        }
+        
+        .rtl .options {
+            align-items: flex-end;
+        }
+    }
+
+    /* EXTRA SMALL MOBILE: 360px and below */
+    @media (max-width: 360px) {
+        .RegOne {
+            padding: 60px 5px 10px;
+        }
+        
+        .welcome-box {
+            padding: 25px 15px;
+            min-height: 180px;
+        }
+        
+        .welcome-box h2 {
+            font-size: 20px;
+        }
+        
+        .description {
+            font-size: 12px;
+        }
+        
+        .form-box {
+            padding: 25px 15px;
+        }
+        
+        .form-box h2 {
+            font-size: 18px;
+        }
+        
+        .input-field input {
+            padding: 12px 35px;
+            font-size: 13px;
+        }
+        
+        .input-field i {
+            font-size: 13px;
+        }
+        
+        .btn-primary {
+            padding: 12px;
+            font-size: 13px;
+        }
+    }
+</style>
+</head>
+<body class="light-mode-default">
+
+    <header>
+        <div class="header-container">
+            <h3><a href="index.html" class="title">GrowwTravels</a></h3>
+            
+            <div class="toggle-wrapper">
+                <div class="toggle-buttons">
+                    <button id="themeToggle" title="Toggle Theme">🌙</button>
+                    <button id="rtlToggle" title="Toggle RTL/LTR">↔</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="RegOne">
+        <div class="login-wrapper">
+
+            <div class="welcome-box">
+                <h2>Welcome Back!</h2>
+                <p class="subtitle">GrowwTravels</p>
+                <p class="description">
+                    Log in to access your dashboard, manage your bookings, and explore exclusive travel packages curated just for you.
+                </p>
+
+                <span class="circle c1"></span>
+                <span class="circle c2"></span>
+                <span class="circle c3"></span>
+            </div>
+
+            <div class="form-box">
+                <h2 style="text-align: center;">Sign In</h2>
+                <p class="form-desc" style="text-align: center;">Please enter your details to continue</p>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="Username or Email">
+                </div>
+
+                <div class="input-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Password">
+                    <!-- <i class="fa-solid fa-eye show-pass"></i> -->
+                </div>
+
+                <div class="options">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+
+                <button class="btn-primary">Sign In</button>
+
+                <div class="divider">OR CONTINUE WITH</div>
+
+                <div class="social-login">
+                    <button class="login-btn">
+                        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+                        Google
+                    </button>
+                    <button class="login-btn">
+                        <img src="Images/apple.jpg" width="20" alt="Apple">
+                        Apple
+                    </button>
+                </div>
+
+                <p class="signup-text">Don't have an account? <a href="Register.html">Register Now</a></p>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const themeBtn = document.getElementById("themeToggle");
+        const rtlBtn = document.getElementById("rtlToggle");
+
+        // Set light mode as active by default
+        document.body.classList.add('light-mode-default');
+        themeBtn.textContent = "🌙"; // Moon icon indicates dark mode can be activated
+        
+        // Theme toggle functionality
+        themeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            
+            // Update button icon based on current mode
+            if (document.body.classList.contains("dark-mode")) {
+                themeBtn.textContent = "🌞"; // Sun icon for dark mode
+            } else {
+                themeBtn.textContent = "🌙"; // Moon icon for light mode
+            }
+            
+            // Save theme preference
+            localStorage.setItem('theme', document.body.classList.contains("dark-mode") ? 'dark' : 'light');
+        });
+
+        // RTL Toggle
+        rtlBtn.addEventListener("click", () => {
+            document.body.classList.toggle("rtl");
+            rtlBtn.textContent = document.body.classList.contains("rtl") ? "↪" : "↔";
+            
+            // Save RTL preference
+            localStorage.setItem('rtl', document.body.classList.contains("rtl") ? 'rtl' : 'ltr');
+        });
+
+        // Load saved preferences
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load theme preference
+            const savedTheme = localStorage.getItem('theme');
+            
+            // By default, light mode is active (already set)
+            // Only apply dark mode if user previously chose it
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeBtn.textContent = "🌞"; // Sun icon for dark mode
+            }
+            
+            // Load RTL
+            const savedRTL = localStorage.getItem('rtl');
+            if (savedRTL === 'rtl') {
+                document.body.classList.add('rtl');
+                rtlBtn.textContent = "↪";
+            }
+            
+            // Add input focus effects
+            const inputs = document.querySelectorAll('.input-field input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
