@@ -891,10 +891,10 @@
         }
 
         /* ==================== */
-        /* SIDEBAR & NAVIGATION - UPDATED FOR MOBILE */
+        /* UPDATED SIDEBAR - Scrolls with page on mobile/tablet */
         /* ==================== */
         .sidebar { 
-            position: fixed; 
+            position: absolute; 
             left: 0; 
             top: 0; 
             width: 280px; 
@@ -904,12 +904,18 @@
             padding: 28px 20px; 
             display: flex; 
             flex-direction: column; 
-            z-index: 999; 
+            z-index: 1000; 
             transition: transform 0.3s ease; 
             border-right: 1px solid var(--border-dim); 
             box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1); 
+            transform: translateX(-100%);
+            overflow-y: auto;
         }
         
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
         .title {
             color: var(--accent-color);
             font-family: 'Poppins', sans-serif;
@@ -934,6 +940,7 @@
         .menu { 
             list-style: none; 
             flex: 1; 
+            margin-top: 20px;
         }
         
         .menu li { 
@@ -967,38 +974,24 @@
         
         .mobile-menu-btn { 
             display: none; 
-            position: relative; 
-            margin: 0 0 20px 0; 
-            z-index: 1001; 
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            z-index: 999; 
             background: var(--accent-red); 
             border: none; 
-            padding: 10px 14px; 
-            border-radius: 10px; 
+            padding: 12px 16px; 
+            border-radius: 12px; 
             color: white; 
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             box-shadow: 0 4px 20px var(--glow-red); 
             transition: all 0.3s ease;
-            width: fit-content; 
-            align-self: flex-start; 
         }
         
         .mobile-menu-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 24px var(--glow-red);
-        }
-        
-        .sidebar-overlay { 
-            display: none; 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0,0,0,0.8); 
-            z-index: 998; 
-            backdrop-filter: blur(4px); 
-        }
-        
-        .sidebar-overlay.active { 
-            display: block; 
         }
 
         .top-bar { 
@@ -1044,48 +1037,45 @@
         }
 
         /* ==================== */
-        /* UPDATED MOBILE SIDEBAR - Scrolls with page */
+        /* RESPONSIVE SIDEBAR - Scrolls with content */
         /* ==================== */
         @media (max-width: 1024px) { 
             .mobile-menu-btn { 
                 display: inline-flex; 
             } 
             
-            .sidebar { 
-                position: relative; 
-                width: 100%; 
-                height: auto; 
-                min-height: auto;
-                max-height: 80vh; 
-                transform: translateX(0); 
-                display: none; 
-                padding: 20px 20px 20px; 
-                margin: 0;
-                border-right: none;
-                border-bottom: 1px solid var(--border-dim);
-                box-shadow: none;
-                overflow-y: auto;
-                z-index: 997;
-            } 
-            
-            .sidebar.active { 
-                display: flex; 
-                position: relative; 
-                transform: translateX(0); 
-            } 
-            
             .main-content {
                 margin-left: 0;
                 width: 100%;
-                padding: 20px 16px 32px;
+                padding: 80px 16px 32px; /* Added top padding for fixed button */
             }
             
             .layout {
                 display: block;
             }
             
+            .top-bar {
+                margin-top: 20px; /* Reduced margin since button is fixed */
+            }
+            
+            /* Remove overlay since sidebar scrolls with page */
             .sidebar-overlay {
                 display: none !important;
+            }
+            
+            /* Allow body to scroll normally */
+            body {
+                overflow-y: auto;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .sidebar { 
+                transform: translateX(0); 
+            }
+            
+            .mobile-menu-btn {
+                display: none;
             }
         }
 
@@ -1177,7 +1167,7 @@
         </aside>
 
         <main class="main-content">
-            <!-- MOVED HAMBURGER BUTTON INSIDE MAIN CONTENT -->
+            <!-- Mobile Menu Button - Fixed -->
             <button class="mobile-menu-btn" id="menuBtn">☰ Menu</button>
             
             <div class="top-bar">
@@ -1412,22 +1402,32 @@
         html.setAttribute('data-theme', savedTheme);
         updateTheme(savedTheme);
 
-        // Mobile menu toggle - simplified for mobile flow
+        // Mobile menu toggle
         menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            // Scroll to top when opening sidebar
-            if (sidebar.classList.contains('active')) {
-                window.scrollTo(0, 0);
-            }
+            const isActive = sidebar.classList.toggle('active');
+            menuBtn.textContent = isActive ? '✕ Close' : '☰ Menu';
+            
+            // Allow scrolling when menu is open (sidebar scrolls with page)
+            document.body.style.overflow = 'auto';
         });
 
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', (event) => {
-            if (window.innerWidth <= 1024) {
-                if (sidebar.classList.contains('active') && 
-                    !sidebar.contains(event.target) && 
-                    !menuBtn.contains(event.target)) {
+        // Close sidebar when clicking menu items on mobile
+        document.querySelectorAll('.menu li').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 1024 && sidebar.classList.contains('active')) {
                     sidebar.classList.remove('active');
+                    menuBtn.textContent = '☰ Menu';
+                }
+            });
+        });
+
+        // Close sidebar when clicking outside on mobile/tablet
+        document.addEventListener('click', (event) => {
+            const isMobileTablet = window.innerWidth <= 1024;
+            if (isMobileTablet && sidebar.classList.contains('active')) {
+                if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                    menuBtn.textContent = '☰ Menu';
                 }
             }
         });
@@ -1463,8 +1463,12 @@
         window.addEventListener('resize', () => {
             if (window.innerWidth > 1024) {
                 sidebar.classList.remove('active');
+                menuBtn.textContent = '☰ Menu';
             }
         });
+
+        // Initialize - ensure body scrolls normally
+        document.body.style.overflow = 'auto';
     </script>
 </body>
 </html>

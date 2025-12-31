@@ -706,77 +706,60 @@
 
 
         /* --- MOBILE RESPONSIVENESS (From TravelHome) --- */
-        @media (min-width: 1023px) and (max-width: 1024px) {
-            /* Hamburger ONLY for 1024x768 */
-            .nav-links {
-                position: fixed; 
-                top: 0; 
-                left: 0;
-                width: 100%; 
-                height: 100vh;
-                background: #ffffff;
-                flex-direction: column !important; /* FORCE COLUMN */
-                justify-content: center;
-                align-items: center;
-                padding: 2rem;
-                transform: translateX(100%);
-                opacity: 0; 
-                visibility: hidden;
-                transition: all 0.4s ease;
-                z-index: 999;
-                gap: 1.5rem;
-                overflow-y: auto;
-            }
-            
-            .dark-mode .nav-links { background: #000000; }
-            
-            .nav-links.active { 
-                transform: translateX(0); 
-                opacity: 1; 
-                visibility: visible; 
-            }
-            
-            .hamburger { display: block; z-index: 1003; } 
-            
-           .dropdown-menu {
-    position: static;
-    display: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    text-align: center;
+       /* ✅ TABLET + MOBILE HAMBURGER (WORKS FOR 800x1280) */
+@media (max-width: 1024px) {
+
+    /* Show hamburger */
+    .hamburger {
+        display: block;
+        z-index: 1003;
+    }
+
+    /* Mobile menu */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg-color);
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Disable hover dropdown */
+    .dropdown:hover .dropdown-menu {
+        display: none;
+    }
+
+    /* Click dropdown */
+    .dropdown-menu {
+        position: static;
+        display: none;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        text-align: center;
+    }
+
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
 }
 
-.dropdown.active > .dropdown-menu {
-    display: block;
-}
-
-            
-            .dropdown-menu li a { 
-                color: var(--text-secondary) !important; 
-                font-size: 1rem; 
-                padding: 0.5rem; 
-            }
-            
-            .nav-links li a { font-size: 1.2rem; }
-
-
-            /* RTL MOBILE FIX - FORCE COLUMN LAYOUT */
-            .rtl .nav-links {
-                flex-direction: column !important; /* OVERRIDE RTL ROW-REVERSE */
-                left: 0;
-                right: auto;
-                text-align: center;
-                transform: translateX(100%);
-            }
-            
-            .rtl .nav-links.active {
-                transform: translateX(0);
-            }
-        }
         
         @media (max-width: 992px) {
             .Devent { 
@@ -1099,7 +1082,164 @@
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+        /* --- HERO BANNER (365x667 SPECIFIC) --- */
+.hero {
+    position: relative;
+    height: 60vh; /* Reduced from 100vh */
+    background: url("Images/2packages.jpg") center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+    margin-top: 60px; /* Added top margin for fixed header */
+    padding: 0 15px; /* Added padding for small screens */
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+    padding: 20px 15px;
+    width: 100%;
+}
+
+.hero h1 {
+    font-size: 1.8rem; /* Smaller font for 365px width */
+    margin: 15px 0;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    line-height: 1.3;
+    padding: 0 10px;
+    word-break: break-word; /* Prevent text overflow */
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 15px;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn.primary {
+    background: rgb(207, 15, 15);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    border: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn.outline {
+    background: transparent;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    border: 2px solid white;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn.primary:hover {
+    background: rgb(180, 13, 13);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(207, 15, 15, 0.3);
+}
+
+.btn.outline:hover {
+    background: white;
+    color: rgb(207, 15, 15);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Specific 365x667 Media Query */
+@media (max-width: 400px) {
+    .hero {
+        height: 55vh; /* Slightly shorter on very small screens */
+        margin-top: 60px;
+    }
+    
+    .hero h1 {
+        font-size: 1.6rem;
+        margin: 10px 0;
+    }
+    
+    .buttons {
+        gap: 12px;
+        margin-top: 20px;
+        max-width: 250px;
+    }
+    
+    .btn.primary,
+    .btn.outline {
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+    
+    .hero-content {
+        padding: 15px 10px;
+    }
+}
+
+/* Landscape mode for 365x667 */
+@media (max-height: 400px) and (orientation: landscape) {
+    .hero {
+        height: 100vh;
+        margin-top: 60px;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .buttons {
+        flex-direction: row;
+        max-width: 400px;
+        gap: 10px;
+    }
+    
+    .btn.primary,
+    .btn.outline {
+        width: auto;
+        min-width: 150px;
+        padding: 10px 15px;
+    }
+}
+
+/* Add this for better touch targets on mobile */
+@media (hover: none) and (pointer: coarse) {
+    .btn.primary,
+    .btn.outline {
+        min-height: 44px; /* Minimum touch target size */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
     </style>
 </head>
 <body>

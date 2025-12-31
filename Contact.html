@@ -711,92 +711,60 @@
         }
 
         /* --- TABLET RESPONSIVENESS (768x1280) --- */
-        @media (min-width: 1023px) and (max-width: 1024px) {
-            /* Hamburger ONLY for 1024x768 */
-            .nav-links {
-                position: fixed; 
-                top: 0; 
-                left: 0;
-                width: 100%; 
-                height: 100vh;
-                background: #ffffff;
-                flex-direction: column !important;
-                justify-content: center;
-                align-items: center;
-                padding: 2rem;
-                transform: translateX(100%);
-                opacity: 0; 
-                visibility: hidden;
-                transition: all 0.4s ease;
-                z-index: 999;
-                gap: 1.5rem;
-                overflow-y: auto;
-            }
-            
-            .dark-mode .nav-links { background: #000000; }
-            
-            .nav-links.active { 
-                transform: translateX(0); 
-                opacity: 1; 
-                visibility: visible; 
-            }
-            
-            .hamburger { display: block; z-index: 1003; } 
-            
-            .dropdown-menu {
-    position: static;
-    display: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    text-align: center;
+       /* ================================
+   TABLET PORTRAIT (800x1280 FIX)
+================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* SHOW HAMBURGER */
+    .hamburger {
+        display: block;
+        z-index: 1003;
+    }
+
+    /* FULLSCREEN NAV */
+    .nav-links {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--nav-bg);
+        flex-direction: column !important;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        transform: translateX(100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* DROPDOWN FIX */
+    .dropdown-menu {
+        position: static;
+        display: none;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        text-align: center;
+    }
+
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
+
+    .nav-links li a {
+        font-size: 1.2rem;
+    }
 }
 
-.dropdown.active > .dropdown-menu {
-    display: block;
-}
-
-            
-            .dropdown-menu li a { 
-                color: var(--text-secondary) !important; 
-                font-size: 1rem; 
-                padding: 0.5rem; 
-            }
-            
-            .nav-links li a { font-size: 1.2rem; }
-
-            /* RTL MOBILE FIX */
-            .rtl .nav-links {
-                flex-direction: column !important;
-                left: 0;
-                right: auto;
-                text-align: center;
-                transform: translateX(100%);
-            }
-            
-            .rtl .nav-links.active {
-                transform: translateX(0);
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .contact-container { 
-
-                flex-direction: column; 
-                padding: 40px 20px; 
-            }
-            
-            .map-box iframe {
-                min-height: 400px;
-            }
-            
-            .form-box {
-                padding: 30px;
-            }
-        }
 
         /* === TABLET RESPONSIVE (769px - 1024px) - FOOTER 2x3 LAYOUT EXACTLY AS IMAGE === */
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -1234,36 +1202,215 @@
             }
         }
 
-        /* For very small screens below 480px */
-        @media (max-width: 480px) {
-            .hero-content h1 { 
-                font-size: 1.5rem; 
+        /* ============ FIX FOR 390x844 (iPhone 12/13/14) ============ */
+        @media (max-width: 430px) {
+            /* Header Fix */
+            .header-container {
+                padding: 0 15px;
             }
             
-            .hero-content p { 
-                font-size: 1rem; 
+            .title {
+                font-size: 1.1rem;
+            }
+            
+            .toggle-buttons button {
+                width: 30px;
+                height: 30px;
+            }
+            
+            /* Hero Section Fix */
+            .hero {
+                height: 50vh;
+                margin-top: -60px;
+                padding-top: 60px;
+            }
+            
+            .hero-content {
+                width: 95%;
+                padding: 0 10px;
             }
             
             .about-btn {
-                padding: 6px 15px;
+                margin-top: 60px;
+                padding: 8px 18px;
                 font-size: 11px;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.5rem;
+                margin-top: 10px;
+                line-height: 1.2;
+            }
+            
+            .hero-content p {
+                font-size: 0.9rem;
+                margin-top: 8px;
+                line-height: 1.4;
+            }
+            
+            /* Help Section Fix */
+            .help-section {
+                padding: 40px 15px;
+            }
+            
+            .help-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 25px;
+            }
+            
+            .help-grid {
+                gap: 12px;
             }
             
             .help-card {
                 padding: 15px;
             }
             
+            .help-icon {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+            
+            .help-card h4 {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+            
+            .help-card p {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+            
+            .help-card a {
+                font-size: 13px;
+            }
+            
+            /* Info Section Fix */
+            .info-section {
+                padding: 50px 15px;
+                gap: 20px;
+            }
+            
+            .info-box {
+                margin-bottom: 15px;
+            }
+            
             .info-box h3 {
                 font-size: 16px;
-                padding: 5px 12px;
+                padding: 6px 15px;
+                margin-bottom: 10px;
             }
             
             .info-box p {
                 font-size: 13px;
+                margin: 4px 0;
+            }
+            
+            /* Contact Container Fix */
+            .contact-container {
+                padding: 30px 15px;
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .map-box {
+                width: 100%;
+                height: 250px;
+                flex: none;
+            }
+            
+            .map-box iframe {
+                min-height: 250px;
             }
             
             .form-box {
                 padding: 20px;
+                width: 100%;
+            }
+            
+            .form-box label {
+                font-size: 13px;
+            }
+            
+            .form-box input,
+            .form-box textarea {
+                padding: 12px;
+                font-size: 13px;
+                margin-bottom: 15px;
+            }
+            
+            .form-box textarea {
+                height: 120px;
+            }
+            
+            .form-box button {
+                padding: 13px;
+                font-size: 14px;
+            }
+            
+            /* Footer Fix */
+            .footer {
+                padding: 3rem 15px 2rem;
+            }
+            
+            .footer-box h3 {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .footer-box h5 {
+                font-size: 0.85rem;
+            }
+            
+            .Searchbox {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .footer-bottom {
+                font-size: 0.8rem;
+                padding: 0 10px;
+            }
+        }
+
+        /* For very small screens below 390px */
+        @media (max-width: 390px) {
+            .hero {
+                height: 75vh;
+            }
+            
+            .hero-content h1 { 
+                font-size: 1.4rem; 
+            }
+            
+            .hero-content p { 
+                font-size: 0.85rem; 
+            }
+            
+            .about-btn {
+                padding: 6px 15px;
+                font-size: 10px;
+                margin-top: 50px;
+            }
+            
+            .help-section {
+                padding: 35px 12px;
+            }
+            
+            .help-section h2 {
+                font-size: 1.2rem;
+            }
+            
+            .info-section {
+                padding: 40px 12px;
+            }
+            
+            .contact-container {
+                padding: 25px 12px;
+            }
+            
+            .footer {
+                padding: 2.5rem 12px 1.5rem;
             }
         }
         

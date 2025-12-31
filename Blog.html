@@ -711,16 +711,17 @@
 
         .footer-bottom { text-align: center; color: var(--text-muted); font-size: 0.9rem; }
 
-        /* --- MOBILE RESPONSIVENESS (From TravelHome) --- */
-        @media (min-width: 1023px) and (max-width: 1024px) {
-            /* Hamburger ONLY for 1024x768 */
+        /* --- TABLET RESPONSIVENESS (800px view) --- */
+        /* Show hamburger and hide full navbar at 768px-1024px */
+        @media (max-width: 1024px) {
             .nav-links {
                 position: fixed; 
                 top: 0; 
                 left: 0;
                 width: 100%; 
                 height: 100vh;
-                background: #ffffff;
+                background: var(--nav-bg);
+                backdrop-filter: blur(20px);
                 flex-direction: column !important;
                 justify-content: center;
                 align-items: center;
@@ -734,10 +735,16 @@
                 overflow-y: auto;
             }
             
-            .dark-mode .nav-links { background: #000000; }
+            .nav-links.active { 
+                transform: translateX(0); 
+                opacity: 1; 
+                visibility: visible; 
+            }
             
-            .nav-links.active { transform: translateX(0); opacity: 1; visibility: visible; }
-            .hamburger { display: block; z-index: 1003; } 
+            .hamburger { 
+                display: block; 
+                z-index: 1003; 
+            }
             
             /* Mobile Dropdown Logic */
             .dropdown-menu {
@@ -754,7 +761,10 @@
                 margin-top: 0;
             }
             
-            .dropdown.active .dropdown-menu { display: block; animation: fadeIn 0.3s ease; }
+            .dropdown.active .dropdown-menu { 
+                display: block; 
+                animation: fadeIn 0.3s ease; 
+            }
             
             .dropdown-menu li a { 
                 color: var(--text-secondary) !important; 
@@ -762,49 +772,88 @@
                 padding: 0.5rem;
             }
             
-            .nav-links li a { font-size: 1.2rem; }
-
-            /* RTL MOBILE FIX - FORCE COLUMN LAYOUT */
+            .nav-links li a { 
+                font-size: 1.2rem; 
+                padding: 0.8rem 0;
+            }
+            
+            /* Hide registration/signin buttons in mobile menu */
+            .nav-links .nav-button {
+                width: 200px;
+                margin-top: 10px;
+            }
+            
             body.rtl .nav-links {
                 flex-direction: column !important;
                 left: 0;
                 right: auto;
                 text-align: center;
             }
-        }
-        
-        @media (max-width: 992px) {
-            .hero h1 { font-size: 32px; }
-            .card-section1 { flex-direction: column; align-items: center; }
-            .card { width: 100%; max-width: 400px; }
             
-            /* Footer adjustment for 992px and below */
-            .footer-container {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-areas: 
-                    "logo logo logo"
-                    "links contact follow"
-                    "news news news";
-                gap: 2rem;
-                text-align: center;
+            /* Adjust header spacing for tablet */
+            .header-container {
+                padding: 0 1.5rem;
             }
             
-            .footer-box:nth-child(1) { grid-area: logo; }
-            .footer-box:nth-child(2) { grid-area: links; }
-            .footer-box:nth-child(3) { grid-area: contact; }
-            .footer-box:nth-child(4) { grid-area: follow; }
-            .footer-box:nth-child(5) { grid-area: news; }
+            /* Make sure logo and controls stay visible */
+            .logo-section, .controls-section {
+                z-index: 1004;
+            }
         }
         
-        /* === TABLET RESPONSIVE (769px - 1024px) - FOOTER 2x3 LAYOUT EXACTLY AS IMAGE === */
+        /* Keep desktop navbar visible for larger screens */
+        @media (min-width: 1025px) {
+            .nav-links {
+                display: flex !important;
+                position: static;
+                height: auto;
+                width: auto;
+                background: transparent;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                flex-direction: row !important;
+            }
+            
+            .hamburger {
+                display: none;
+            }
+            
+            .dropdown-menu {
+                display: block !important;
+                position: absolute;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+            }
+            
+            .dropdown:hover .dropdown-menu {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+        }
+
         @media (min-width: 769px) and (max-width: 1024px) {
+            /* Tablet specific adjustments */
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            .card {
+                width: 320px;
+            }
+            
+            .card-section1 {
+                gap: 25px;
+            }
+            
+            /* Footer adjustments for tablet */
             .footer {
                 padding: 4rem 3rem 2rem;
             }
             
             .footer-container {
-                max-width: 100%;
-                display: grid;
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: auto auto auto;
                 gap: 3rem 4rem;
@@ -913,92 +962,14 @@
             }
         }
         
-        /* SPECIFIC STYLING FOR 768x1024 VIEWPORT AND BELOW */
         @media (max-width: 768px) {
-            /* Header adjustments */
-            .header-container {
-                padding: 0 1rem;
-            }
-            
-            /* Hamburger Menu for Mobile and Tablet Portrait */
-            .nav-links {
-                position: fixed; 
-                top: 0; 
-                left: 0;
-                width: 100%; 
-                height: 100vh;
-                background: #ffffff;
-                flex-direction: column !important;
-                justify-content: center;
-                align-items: center;
-                padding: 2rem;
-                transform: translateX(100%);
-                opacity: 0; 
-                visibility: hidden;
-                transition: all 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-                z-index: 999;
-                gap: 1.5rem;
-                overflow-y: auto;
-            }
-            
-            .dark-mode .nav-links { background: #000000; }
-            
-            .nav-links.active { 
-                transform: translateX(0); 
-                opacity: 1; 
-                visibility: visible; 
-            }
-            
-            .hamburger { 
-                display: block; 
-                z-index: 1003; 
-            }
-            
-            /* Mobile Dropdown Logic */
-            .dropdown-menu {
-                position: static; 
-                opacity: 1; 
-                visibility: visible;
-                transform: none; 
-                background: transparent;
-                box-shadow: none; 
-                display: none;
-                border: none; 
-                text-align: center;
-                padding-top: 0.5rem;
-                margin-top: 0;
-            }
-            
-            .dropdown.active .dropdown-menu { 
-                display: block; 
-                animation: fadeIn 0.3s ease; 
-            }
-            
-            .dropdown-menu li a { 
-                color: var(--text-secondary) !important; 
-                font-size: 1rem;
-                padding: 0.5rem;
-            }
-            
-            .nav-links li a { 
-                font-size: 1.2rem; 
-                padding: 0.8rem 0;
-            }
-            
-            body.rtl .nav-links {
-                flex-direction: column !important;
-                left: 0;
-                right: auto;
-                text-align: center;
-            }
-
-            /* Hero adjustments */
+            /* Mobile adjustments */
             .hero {
                 height: 70vh;
             }
             
             .hero h1 {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .buttons {
@@ -1147,6 +1118,51 @@
             from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* ===============================
+   HERO MOBILE FIX (375 × 667)
+   ONLY HERO SECTION
+================================ */
+@media (max-width: 480px) {
+
+    .hero {
+        height: auto;
+        min-height: 85vh;
+        margin-top: 0;
+        padding-top: 120px;
+        padding-bottom: 60px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .hero h1 {
+        font-size: 22px;
+        line-height: 1.3;
+        margin: 15px 0;
+    }
+
+    .tag {
+        font-size: 0.8rem;
+        padding: 6px 14px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .btn.primary,
+    .btn.outline {
+        width: 90%;
+        max-width: 240px;
+        font-size: 15px;
+        padding: 10px 0;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1386,6 +1402,13 @@
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('active');
+            
+            // Close dropdowns when menu opens/closes
+            if (navLinks.classList.contains('active')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
         });
 
         // Mobile Dropdown
@@ -1465,6 +1488,25 @@
                 });
             }
         });
+
+      // Close menu when clicking on a link (but not dropdown parents)
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        // Don't close if it's a dropdown parent link
+        if (link.parentElement.classList.contains('dropdown') && 
+            link.nextElementSibling?.classList.contains('dropdown-menu')) {
+            return; // Skip closing for dropdown parent links
+        }
+        
+        if (window.innerWidth <= 1024) {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+});
 
         // Placeholder Alerts
         function openRegistration() { alert('Registration form will open here.'); }

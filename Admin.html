@@ -43,6 +43,9 @@
             --sidebar-text: #1a1a1a;
             --menu-text: #666666;
             --menu-text-hover: #dc2626;
+            
+            /* Overlay color */
+            --overlay-bg: rgba(0, 0, 0, 0.5);
         }
 
         [data-theme="dark"] {
@@ -77,6 +80,9 @@
             --sidebar-text: #ffffff;
             --menu-text: rgba(255, 255, 255, 0.8);
             --menu-text-hover: #ffffff;
+            
+            /* Overlay color for dark mode */
+            --overlay-bg: rgba(0, 0, 0, 0.7);
         }
 
         * {
@@ -116,10 +122,11 @@
             position: relative;
         }
 
-        /* MOBILE MENU BUTTON - MOVED TO CONTENT FLOW */
+        /* MOBILE MENU BUTTON - FIXED POSITION */
         .mobile-menu-btn {
-            position: relative; /* CHANGED from fixed to relative */
-            margin: 0 0 20px 0; /* Added margin for spacing */
+            position: absolute;
+            top: 20px;
+            left: 20px;
             z-index: 1001;
             background: var(--accent-red);
             border: 1px solid var(--accent-red);
@@ -129,13 +136,12 @@
             color: white;
             font-size: 13px;
             font-weight: 600;
-            display: inline-flex; /* Changed to inline-flex */
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             box-shadow: 0 4px 20px var(--glow-red);
             transition: all 0.3s ease;
-            width: fit-content; /* Fit content width */
-            align-self: flex-start; /* Align to start */
+            width: fit-content;
         }
 
         .mobile-menu-btn:hover {
@@ -148,28 +154,45 @@
             font-size: 16px;
         }
 
-        /* Sidebar for Mobile & Tablet - Part of page flow */
-        .sidebar {
-            position: relative;
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-height: 0;
+            height: 100%;
+            background: var(--overlay-bg);
+            z-index: 999;
+            display: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Sidebar for Mobile & Tablet - Fixed Overlay */
+        .sidebar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
             background: var(--bg-sidebar);
             color: var(--sidebar-text);
-            padding: 0;
+            padding: 28px 20px 20px;
             display: flex;
             flex-direction: column;
-            z-index: 997;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-bottom: none;
-            margin-top: 0;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-right: 1px solid var(--border-dim);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
         }
 
         .sidebar.active {
-            max-height: 1000px;
-            padding: 28px 20px 20px;
-            border-bottom: 1px solid var(--border-dim);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transform: translateX(0);
         }
 
         .sidebar::-webkit-scrollbar {
@@ -360,7 +383,7 @@
 
         /* Content container */
         .content-container {
-            padding: 20px 16px 24px; /* CHANGED: Reduced top padding since button is in flow */
+            padding: 20px 16px 24px;
             transition: padding 0.3s ease;
         }
 
@@ -1089,40 +1112,33 @@
                 min-height: 100vh;
             }
 
-            .mobile-menu-btn {
-                display: inline-flex; /* Show as inline flex */
-                position: relative; /* Part of flow */
-                top: auto;
-                left: auto;
-                margin: 0 0 20px 0; /* Add bottom margin */
+            /* Hide mobile menu button from content container */
+            .content-container .mobile-menu-btn {
+                display: none;
             }
 
+            /* Fixed mobile menu button */
+            .mobile-menu-btn {
+                display: flex !important;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+            }
+
+            /* Sidebar overlay on mobile */
             .sidebar {
-                margin-top: 0;
-                width: 100%;
-                border-bottom: none;
-                box-shadow: none;
-                position: relative;
-                z-index: 996;
-                max-height: 0;
-                overflow: hidden;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                width: 280px;
+                transform: translateX(-100%);
+                z-index: 1000;
             }
 
             .sidebar.active {
-                max-height: 1000px;
-                padding: 28px 20px 20px;
-                border-bottom: 1px solid var(--border-dim);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                transform: translateX(0);
             }
 
             .content-container {
-                padding: 20px 16px 20px; /* CHANGED: Reduced top padding */
-                transition: padding 0.3s ease;
-            }
-
-            .sidebar.active + .content-container {
-                padding-top: 20px;
+                padding: 80px 16px 20px; /* Add top padding for fixed button */
             }
 
             /* Adjust top bar for mobile */
@@ -1209,78 +1225,63 @@
         }
 
         /* =========================================
-           TABLET VIEW (768px - 1024px)
+           TABLET VIEW (768px - 1024px) - FIXED
            ========================================= */
         @media screen and (min-width: 768px) and (max-width: 1024px) {
             .layout {
-                display: block;
+                display: flex;
                 min-height: 100vh;
             }
 
+            /* Show mobile menu button for tablet */
             .mobile-menu-btn {
-                display: inline-flex; /* Show as inline flex */
-                position: relative; /* Part of flow */
-                top: auto;
-                left: auto;
-                margin: 0 0 20px 0; /* Add bottom margin */
+                display: flex !important;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
                 padding: 14px 20px;
                 font-size: 15px;
             }
 
+            /* Sidebar overlay on tablet */
             .sidebar {
-                width: 100%;
-                max-height: 0;
-                overflow: hidden;
-                position: relative;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                margin-top: 0;
-                border-bottom: none;
-                box-shadow: none;
-                z-index: 996;
+                width: 280px;
+                transform: translateX(-100%);
+                z-index: 1000;
             }
 
             .sidebar.active {
-                max-height: 800px;
-                padding: 28px 40px;
-                border-bottom: 1px solid var(--border-dim);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                transform: translateX(0);
             }
 
             .content-container {
-                padding: 20px 32px 32px; /* CHANGED: Reduced top padding */
-                transition: padding 0.3s ease;
+                padding: 90px 32px 32px;
+                width: 100%;
+                margin-left: 0;
             }
 
-            .sidebar.active + .content-container {
-                padding-top: 20px; /* CHANGED: Reduced */
-            }
-
-            /* Adjust menu for tablet */
+            /* Menu stays as list for tablet */
             .menu {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-                margin-bottom: 30px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
             }
 
             .menu li {
-                flex-direction: column;
-                text-align: center;
-                padding: 15px 10px;
-                margin-bottom: 0;
+                flex-direction: row;
+                text-align: left;
+                padding: 15px 16px;
             }
 
             .menu-icon {
-                font-size: 22px;
-                margin-bottom: 8px;
+                font-size: 18px;
+                margin-bottom: 0;
             }
 
-            .menu li span:last-child {
-                font-size: 12px;
-            }
-
-            /* Top bar adjustments */
+            /* Top bar adjustments for tablet */
             .top-bar {
+                display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
@@ -1288,7 +1289,7 @@
             }
 
             .page-title {
-                font-size: 28px;
+                font-size: 24px;
                 margin-bottom: 0;
             }
 
@@ -1298,20 +1299,22 @@
             }
 
             .btn-control {
-                padding: 12px 20px;
+                flex: none;
+                padding: 12px 16px;
                 font-size: 14px;
             }
 
-            /* Revenue section - side by side on tablet */
+            /* Revenue section - 2 columns layout */
             .revenue-section {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 24px;
+                margin-bottom: 24px;
             }
 
             .revenue-card {
-                padding: 28px;
-                grid-column: 1;
+                padding: 24px;
+                grid-column: 1 / span 2;
             }
 
             .revenue-amount {
@@ -1319,18 +1322,16 @@
             }
 
             .money-icon {
-                width: 60px;
-                height: 60px;
+                width: 56px;
+                height: 56px;
                 font-size: 24px;
-                top: 28px;
-                right: 28px;
             }
 
             /* Small cards grid - 2x2 layout */
             .small-cards-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
-                grid-column: 2;
+                grid-column: 1 / span 2;
             }
 
             .small-card {
@@ -1382,10 +1383,10 @@
                 font-size: 22px;
             }
 
-            /* Chart adjustments */
+            /* Chart adjustments for tablet */
             .chart {
-                height: 220px;
-                gap: 14px;
+                height: 200px;
+                gap: 12px;
             }
 
             .bar-value {
@@ -1398,7 +1399,7 @@
                 bottom: -28px;
             }
 
-            /* Table adjustments */
+            /* Table adjustments for tablet */
             .table-wrapper {
                 margin: 0;
                 padding: 0;
@@ -1410,20 +1411,20 @@
 
             .data-table th,
             .data-table td {
-                padding: 12px 16px;
-                font-size: 13px;
+                padding: 12px 14px;
+                font-size: 12px;
             }
 
-            /* Progress items */
+            /* Progress items adjustments */
             .progress-items {
-                gap: 24px;
+                gap: 20px;
             }
 
             .progress-track {
-                height: 12px;
+                height: 10px;
             }
 
-            /* Stats row in revenue card */
+            /* Stats row adjustments */
             .stats-row {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 12px;
@@ -1437,26 +1438,57 @@
                 font-size: 18px;
             }
 
-            /* Admin box adjustments for tablet */
+            /* Admin box stays horizontal for tablet */
             .admin-box {
-                flex-direction: column;
-                text-align: center;
-                padding: 20px;
-                margin-top: 20px;
+                flex-direction: row;
+                text-align: left;
+                padding: 16px;
             }
 
             .avatar {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 12px;
+                width: 48px;
+                height: 48px;
+                margin-bottom: 0;
             }
 
             .info {
-                text-align: center;
+                text-align: left;
             }
 
             .logout {
-                margin-top: 20px;
+                margin-top: 16px;
+            }
+        }
+
+        /* =========================================
+           TABLET LANDSCAPE (900px - 1024px) - OPTIMIZED
+           ========================================= */
+        @media screen and (min-width: 900px) and (max-width: 1024px) {
+            .content-container {
+                padding: 90px 40px 40px;
+            }
+
+            .revenue-section {
+                grid-template-columns: 1fr 1fr;
+                gap: 28px;
+            }
+
+            .revenue-card {
+                grid-column: 1;
+            }
+
+            .small-cards-grid {
+                grid-column: 2;
+                grid-template-columns: 1fr;
+            }
+
+            .small-card {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .section-grid {
+                grid-template-columns: 2fr 1fr;
             }
         }
 
@@ -1468,7 +1500,11 @@
                 display: flex;
             }
 
-            /* Hide mobile menu button on desktop */
+            /* Hide overlay and mobile button on desktop */
+            .sidebar-overlay {
+                display: none !important;
+            }
+
             .mobile-menu-btn {
                 display: none;
             }
@@ -1480,18 +1516,11 @@
                 top: 0;
                 width: 280px;
                 height: 100vh;
-                max-height: none;
-                padding: 28px 20px;
                 transform: translateX(0);
                 overflow-y: auto;
                 border-right: 1px solid var(--border-dim);
                 box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
                 z-index: 999;
-            }
-
-            .sidebar.active {
-                box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
-                border-bottom: none;
             }
 
             .content-container {
@@ -1644,7 +1673,7 @@
            ========================================= */
         @media screen and (max-width: 480px) {
             .content-container {
-                padding: 20px 12px 16px; /* CHANGED: Reduced top padding */
+                padding: 70px 12px 16px; /* Adjust for fixed button */
             }
 
             .sidebar.active {
@@ -1693,6 +1722,9 @@
     </style>
 </head>
 <body>
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
     <div class="layout">
         <aside class="sidebar" id="sidebar">
             <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -1741,13 +1773,13 @@
         </aside>
 
         <main class="main-content">
+            <!-- Fixed Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="menuBtn">
+                <span class="icon" id="menuIcon">☰</span>
+                <span id="menuText">Menu</span>
+            </button>
+            
             <div class="content-container">
-                <!-- MOVED HAMBURGER BUTTON INSIDE CONTENT CONTAINER -->
-                <button class="mobile-menu-btn" id="menuBtn">
-                    <span class="icon" id="menuIcon">☰</span>
-                    <span id="menuText">Menu</span>
-                </button>
-                
                 <div class="top-bar">
                     <h1 class="page-title" id="pageTitle">Dashboard Overview</h1>
                     <div class="controls">
@@ -2081,153 +2113,189 @@
     </div>
 
     <script>
-        const menuBtn = document.getElementById('menuBtn');
-        const sidebar = document.getElementById('sidebar');
-        const menuIcon = document.getElementById('menuIcon');
-        const menuText = document.getElementById('menuText');
-        const themeBtn = document.getElementById('themeBtn');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
-        const rtlBtn = document.getElementById('rtlBtn');
-        const pageTitle = document.getElementById('pageTitle');
-        const html = document.documentElement;
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const menuIcon = document.getElementById('menuIcon');
+    const menuText = document.getElementById('menuText');
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const rtlBtn = document.getElementById('rtlBtn');
+    const pageTitle = document.getElementById('pageTitle');
+    const html = document.documentElement;
 
-        // Page titles for each section
-        const pageTitles = {
-            'dashboard': 'Dashboard Overview',
-            'packages': 'Travel Packages',
-            'users': 'Users Management',
-            'bookings': 'Bookings',
-            'analytics': 'Analytics',
-            'messages': 'Messages',
-            'settings': 'Settings'
-        };
+    // Page titles for each section
+    const pageTitles = {
+        'dashboard': 'Dashboard Overview',
+        'packages': 'Travel Packages',
+        'users': 'Users Management',
+        'bookings': 'Bookings',
+        'analytics': 'Analytics',
+        'messages': 'Messages',
+        'settings': 'Settings'
+    };
 
-        // Load theme - LIGHT MODE IS DEFAULT
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', savedTheme);
-        updateTheme(savedTheme);
+    // Load theme - LIGHT MODE IS DEFAULT
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    updateTheme(savedTheme);
 
-        // Menu toggle (mobile and tablet)
-        menuBtn.addEventListener('click', () => {
-            const isActive = sidebar.classList.toggle('active');
-            menuIcon.textContent = isActive ? '✕' : '☰';
-            menuText.textContent = isActive ? 'Close' : 'Menu';
-            
-            // Scroll to top of sidebar when opening
+    // Menu toggle (mobile and tablet)
+    menuBtn.addEventListener('click', () => {
+        const isActive = sidebar.classList.toggle('active');
+        sidebarOverlay.classList.toggle('active');
+        menuIcon.textContent = isActive ? '✕' : '☰';
+        menuText.textContent = isActive ? 'Close' : 'Menu';
+        
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = isActive ? 'hidden' : '';
+        
+        // Hide menu button when sidebar is open (for mobile/tablet)
+        if (window.innerWidth <= 1024) {
             if (isActive) {
-                window.scrollTo(0, 0);
-            }
-        });
-
-        // Close sidebar when clicking outside on mobile/tablet
-        document.addEventListener('click', (event) => {
-            const isMobileTablet = window.innerWidth <= 1024;
-            if (isMobileTablet && sidebar.classList.contains('active')) {
-                if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
-                    closeSidebar();
-                }
-            }
-        });
-
-        function closeSidebar() {
-            sidebar.classList.remove('active');
-            menuIcon.textContent = '☰';
-            menuText.textContent = 'Menu';
-        }
-
-        // Theme toggle
-        themeBtn.addEventListener('click', () => {
-            const current = html.getAttribute('data-theme');
-            const newTheme = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateTheme(newTheme);
-        });
-
-        function updateTheme(theme) {
-            themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
-            themeText.textContent = theme === 'light' ? 'Dark' : 'Light';
-        }
-
-        // RTL toggle
-        rtlBtn.addEventListener('click', () => {
-            document.body.dir = document.body.dir === 'rtl' ? 'ltr' : 'rtl';
-        });
-
-        // Navigation functionality
-        function switchPage(pageId) {
-            // Hide all page contents
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            const activePage = document.getElementById(`page-${pageId}`);
-            if (activePage) {
-                activePage.classList.add('active');
-                pageTitle.textContent = pageTitles[pageId] || 'GrowwTravel Admin';
-            }
-            
-            // Update active nav link
-            document.querySelectorAll('.menu li').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            const activeNav = document.querySelector(`.menu li[data-page="${pageId}"]`);
-            if (activeNav) {
-                activeNav.classList.add('active');
+                menuBtn.style.opacity = '0';
+                menuBtn.style.visibility = 'hidden';
+                menuBtn.style.pointerEvents = 'none';
+            } else {
+                menuBtn.style.opacity = '1';
+                menuBtn.style.visibility = 'visible';
+                menuBtn.style.pointerEvents = 'auto';
             }
         }
+    });
 
-        // Menu items click handler
+    // Close sidebar when clicking overlay
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking outside on mobile/tablet
+    document.addEventListener('click', (event) => {
+        const isMobileTablet = window.innerWidth <= 1024;
+        if (isMobileTablet && sidebar.classList.contains('active')) {
+            if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+                closeSidebar();
+            }
+        }
+    });
+
+    // Close sidebar with escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+            closeSidebar();
+        }
+    });
+
+    function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        menuIcon.textContent = '☰';
+        menuText.textContent = 'Menu';
+        document.body.style.overflow = '';
+        
+        // Show menu button again
+        if (window.innerWidth <= 1024) {
+            menuBtn.style.opacity = '1';
+            menuBtn.style.visibility = 'visible';
+            menuBtn.style.pointerEvents = 'auto';
+        }
+    }
+
+    // Theme toggle
+    themeBtn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const newTheme = current === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateTheme(newTheme);
+    });
+
+    function updateTheme(theme) {
+        themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+        themeText.textContent = theme === 'light' ? 'Dark' : 'Light';
+    }
+
+    // RTL toggle
+    rtlBtn.addEventListener('click', () => {
+        document.body.dir = document.body.dir === 'rtl' ? 'ltr' : 'rtl';
+    });
+
+    // Navigation functionality
+    function switchPage(pageId) {
+        // Hide all page contents
+        document.querySelectorAll('.page-content').forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // Show selected page
+        const activePage = document.getElementById(`page-${pageId}`);
+        if (activePage) {
+            activePage.classList.add('active');
+            pageTitle.textContent = pageTitles[pageId] || 'GrowwTravel Admin';
+        }
+        
+        // Update active nav link
         document.querySelectorAll('.menu li').forEach(item => {
-            item.addEventListener('click', () => {
-                const pageId = item.getAttribute('data-page');
-                switchPage(pageId);
-                
-                // Close sidebar on mobile and tablet
-                if (window.innerWidth <= 1024) {
-                    closeSidebar();
-                }
-            });
+            item.classList.remove('active');
         });
+        
+        const activeNav = document.querySelector(`.menu li[data-page="${pageId}"]`);
+        if (activeNav) {
+            activeNav.classList.add('active');
+        }
+    }
 
-        // Logout
-        document.querySelector('.logout').addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('Are you sure you want to logout?')) {
-                alert('Logged out successfully!');
-                window.location.href = 'index.html';
-            }
-        });
-
-        // Chart buttons
-        document.querySelectorAll('.chart-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // Animate progress bars on load
-        setTimeout(() => {
-            document.querySelectorAll('.progress-bar-fill').forEach(bar => {
-                const w = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => bar.style.width = w, 100);
-            });
-        }, 300);
-
-        // Handle resize - auto-close sidebar on desktop
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 1024 && sidebar.classList.contains('active')) {
+    // Menu items click handler
+    document.querySelectorAll('.menu li').forEach(item => {
+        item.addEventListener('click', () => {
+            const pageId = item.getAttribute('data-page');
+            switchPage(pageId);
+            
+            // Close sidebar on mobile and tablet
+            if (window.innerWidth <= 1024) {
                 closeSidebar();
             }
         });
+    });
 
-        // Initialize dashboard as active page
-        switchPage('dashboard');
-    </script>
+    // Logout
+    document.querySelector('.logout').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Are you sure you want to logout?')) {
+            alert('Logged out successfully!');
+            window.location.href = 'index.html';
+        }
+    });
+
+    // Chart buttons
+    document.querySelectorAll('.chart-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.chart-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Animate progress bars on load
+    setTimeout(() => {
+        document.querySelectorAll('.progress-bar-fill').forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => bar.style.width = w, 100);
+        });
+    }, 300);
+
+    // Handle resize - auto-close sidebar on desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024) {
+            closeSidebar();
+            // Reset menu button styles on desktop
+            menuBtn.style.opacity = '1';
+            menuBtn.style.visibility = 'visible';
+            menuBtn.style.pointerEvents = 'auto';
+        }
+    });
+
+    // Initialize dashboard as active page
+    switchPage('dashboard');
+</script>
 </body>
 </html>
